@@ -1,0 +1,121 @@
+---
+title: session3
+author: CEU mentoring
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+
+
+```{r, echo=FALSE, warning=F, message=F, warning=FALSE}
+library(nycflights13)
+library(tidyverse)
+library(ggplot2)
+df <- flights
+# http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html
+p1 <- 
+mtcars %>% 
+  ggplot(aes(x=mpg , y=hp)) + 
+  geom_point()
+
+p2 <-   ggplot(data = mtcars, aes(x=mpg , y=hp)) + 
+  geom_point()
+
+
+```
+
+
+# Which airplane flought the most times?
+```{r, echo=FALSE,message=F, warning=FALSE}
+df %>%
+  filter(!is.na(tailnum)) %>% 
+  group_by(tailnum)%>%
+  summarise('number_of_flights' = n() ) %>%
+  arrange(-number_of_flights)%>%
+  head(1)
+
+```
+
+# Create the departure delay histogram
+```{r, echo=FALSE, message=F, warning=FALSE}
+df %>% 
+ggplot(aes(x=dep_delay)) +
+  geom_bar()+ 
+  theme_bw()+
+  labs(x='Departure delay', y='Number of observation', title = 'Departure delay histogram')
+
+
+```
+
+
+# Number of flights to destination
+```{r, echo=FALSE, message=F, warning=FALSE}
+# number of flights from origin
+df %>%
+  group_by(dest)%>%
+  summarise('number_of_flights'=n()) %>%
+  arrange(-number_of_flights) %>% 
+  ggplot(aes(x=dest, y=number_of_flights) ) +
+  geom_col()+
+    labs(title='Number of flights to destination', y='Number of flights', x = 'Destination')
+
+
+
+```
+
+# Top 10 most popular destination
+
+```{r, echo=FALSE, message=F, warning=FALSE}
+df %>%
+  group_by(dest)%>%
+  summarise('number_of_flights'=n()) %>%
+  arrange(-number_of_flights) %>% 
+  head(10) %>% 
+  ggplot(aes(x = reorder(dest, -number_of_flights), y = number_of_flights)) + geom_col()+
+  theme_classic()+
+  labs(title='Top 10 most popular destination', y='Number of flights', x = 'Destination')
+
+
+
+
+
+```
+
+# The most exact destinations (dep_delay_is the least on average top 10)
+```{r, echo=FALSE, message=F, warning=FALSE}
+
+
+df %>%
+  group_by(dest)%>%
+  summarise('mean_delay'= mean(dep_delay, na.rm = T)) %>%
+  arrange(mean_delay)%>%
+  head(10)%>%
+  ggplot(aes(dest, mean_delay)) + geom_point(color='red') + labs(title = 'The most exact destinations', x='Destination', y='Average late') + theme_light()
+
+
+```
+
+# iris data plot
+```{r, echo=FALSE}
+iris %>%
+  ggplot(aes(x = Sepal.Length, y = Sepal.Width)) +
+  geom_point() +
+  facet_wrap(~ Species)+
+  theme_test()+
+  labs( x='Length', y='Width')
+
+```
+
+```{r, echo=FALSE}
+
+```
+
+
+
+
+
+
+
+

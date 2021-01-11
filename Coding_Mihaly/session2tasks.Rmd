@@ -1,0 +1,121 @@
+---
+title: R_practice_session-2
+author: Deborah
+date: Oct 8, 2020
+output:
+  rmarkdown::html_document:
+    theme: lumen
+---
+
+## Create a folder somewhere and name it R_codes
+
+setwd('/Users/wodediannao/Desktop/CodingInR')
+dir.create('R_codes')
+
+### Create a project name it mentoring_2, and select the R_codes folder to base folder
+
+#created!
+
+
+### Print out the workng directory
+```{r }
+getwd() 
+#right answer
+print(getwd())
+```
+
+
+### Download the AMZN data from ceulearning
+### Save it into the working directory
+### Read the data with fullpath and with relativ path
+```{r }
+da1 <- read.csv('~/Desktop/CodingInR/coding_practice/AMZN.csv') #full path
+da2 <- read.csv('../../CodingInR/coding_practice/AMZN.csv') #relatie path
+```
+
+
+### How can you comment multiple lines?
+```{r }
+# print your answer 
+# print your answer 
+# print your answer 
+# command + shift + c
+print('command + shift + c')
+```
+
+### How can you add the pipe symbol?
+```{r }
+ #%>% command + shift + m
+print('command + shift + m')
+```
+
+### How can you insert code block? Why is it good?
+```{r }
+# print your answer 
+print(' ``` 
+      ```')
+# another answer
+# code » insert chunk (shorcut not available)
+```
+
+
+### install a package called rtsdata, then run following lines
+```{r }
+
+install.packages('rtsdata')
+update.packages('zoo')
+install.packages('rtx')
+library('rtsdata')
+ticker <- 'TSLA'
+start_date <- '2020-01-01'
+end_date <- Sys.Date()
+df <- data.frame(ds.getSymbol.yahoo(ticker, from = start_date, to = end_date))
+
+```
+
+### Rename the header, to open, high,low, close, volume, adjusted,
+
+```{r }
+colnames(df) <- c('open', 'high','low', 'close', 'volume', 'adjusted')
+```
+
+
+### Create a column which contains the dates value
+```{r }
+df$dates <- c(row.names(df)) #amazing!
+```
+
+
+### Delete the adjusted column
+```{r }
+df <- df[-6]
+#answer answer
+df$adjusted <- NULL
+```
+
+### Create a column which indicate that if the close price is above the mean of close price use if-else
+```{r }
+library('dplyr')
+mutate(df, above_mean = ifelse(close > mean(close), 'above', 'below'))
+
+```
+
+### Create a column with the year value it should be string
+```{r }
+df$year = substr(df$dates, 1,4)
+```
+
+### Save the clean data into xlsx, csv, rds format, save table it with '#'separator as .txt 
+```{r }
+write.csv(df, "amazon.csv")
+write.table(df, 'amazon_t.txt', sep = '/#')
+
+install.packages("writexl")
+library('writexl')
+write_xlsx(df, "amazon_x.xlsx")
+
+saveRDS(df, "amazon_rds.rds")
+```
+
+### Change the theme of rmd with preaty doc
+

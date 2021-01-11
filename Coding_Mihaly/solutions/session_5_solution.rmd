@@ -1,0 +1,172 @@
+---
+title: 'session 5'
+author: CEU mentoring
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+
+
+Exercise 1
+Write a for loop that iterates over the numbers 1 to 7 and prints the cube of each number using print().
+
+```{r, echo=FALSE}
+library(ggplot2)
+library(prettydoc)
+# https://www.r-exercises.com/2018/03/30/loops-in-r-exercises/
+for (i in 1:7) {
+  print(i^3)
+}
+
+```
+Exercise 2
+Write a for loop that iterates over the column names of the inbuilt iris dataset and print each together with the number of characters in the column name in parenthesis. Example output: Sepal.Length (12). Use the following functions print(), paste0() and nchar().
+
+```{r, echo=FALSE}
+for (i in names(iris)) {
+  print(paste0(i, ' (', nchar(i), ')' ) )
+}
+
+```
+
+
+Exercise 3
+
+Write a while loop that prints out standard random normal numbers (use rnorm()) but stops (breaks) if you get a number bigger than 1.
+
+```{r, echo=FALSE}
+while (TRUE ) {
+  t <- rnorm(1)
+  if (t>1) {
+    print(paste0(t, ' is bigger than 1 the loop stopped'))
+    break() 
+  }else{
+    print(t)
+  }
+}
+
+
+```
+
+
+Exercise 4
+
+Using next adapt the loop from last exercise so that doesn’t print negative numbers.
+
+```{r, echo=FALSE}
+while (TRUE ) {
+  t <- rnorm(1)
+  if (t<0) {
+    next()
+  }
+  if (t>1) {
+    print(paste0(t, ' is bigger than 1 the loop stopped'))
+    break() 
+  }else{
+    print(t)
+  }
+}
+
+
+```
+
+Exercise 5
+
+Using a for loop simulate the flip a coin twenty times, keeping track of the individual outcomes (1 = heads, 0 = tails) in a vector that you preallocte.
+
+```{r, echo=FALSE}
+flips<- NULL
+for (i in 1:20) {
+  flips <-c( flips, sample(c(0,1), 1) )
+}
+print(flips)
+
+#sample(c(0, 1), 20, replace = T)
+
+```
+
+Exercise 6
+
+Use a while loop to investigate the number of terms required before the product
+
+1⋅2⋅3⋅4⋅…
+
+reaches above 10 million.
+
+```{r, echo=FALSE}
+all_product <- 1
+t_number <- 1
+while (TRUE) {
+  print(t_number)
+
+  all_product <- all_product*t_number
+  if (all_product>10000000) {
+    print(paste0('The solution is: ', t_number, ' the product is: ',all_product ))
+    break()
+  }
+    t_number <-t_number +1
+  
+  
+}
+
+
+```
+
+
+Exercise 7
+
+Drunk people theory.
+
+You need to go home which is 1500m far from you right now.
+
+In one step you can go 1m closer or 0.9m back (you are drunk)
+
+How many steps you need to reach home?
+
+Plot your result. 
+
+Simulate it 10 times
+
+
+```{r, echo=FALSE}
+
+for (i in 1:5) {
+  
+
+
+all_steps <- NULL
+while (TRUE) {
+  t_step <- sample(c(1, -0.9), 1)
+  all_steps <- c(all_steps, t_step)
+  t_progress<- tail(cumsum(all_steps), 1)
+  if (t_progress >=1500) {
+    print(paste0('I need ', length(all_steps), ' steps to get home.'))
+    break()
+  }  
+}
+
+df <- data.frame('steps'= 1:length(all_steps), 'progress'= cumsum(all_steps) )
+
+plot(ggplot(df, aes(x=steps, y=progress))+
+  geom_line()+
+  theme_bw()
+)
+}
+
+```
+
+Exercise 8
+
+Implement a multiplication game. A while loop that gives the user two random numbers from 2 to 12 and asks the user to multiply them. Only exit the loop after five correct answers. Try using as.integer(readline()) instead of scan() this time.
+
+Exercise 9 
+
+Make a lotery simulation.
+Ask 5 number from the user and simulate the lottery draw from 90 ball, and write the result back to the user. 
+
+
+
+
+

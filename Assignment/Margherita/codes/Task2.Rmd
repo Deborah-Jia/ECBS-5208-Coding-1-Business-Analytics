@@ -1,0 +1,143 @@
+---
+title: "Task 2 by Team A"
+geometry: "left=1cm,right=1cm,top=1cm,bottom=1.5cm"
+classoption: fleqn
+header-includes:
+   - \usepackage{setspace}
+   - \singlespacing
+fontsize: 10.5pt
+mainfont: Calibri
+sansfont: Calibri
+monofont: Calibri
+output: 
+  pdf_document
+---
+
+## Introduction
+<font size="3"> In this exercise, we want to compare the price difference of margherita pizza price from pizza restaurants in inner and outer Budapest, and that of and beverage as well. Data in this set were collected from different online sources, such as restaurant website and [Netpincer](www.netpincer.hu). There are 44 observations from inner and outer Budapest pizza restaurants on their 32cm Margherita Pizza and 0.5l beverage price. 
+</font> 
+
+<font size="3">
+We recorded the observations in one Google Sheet. However, some duplicates were found. We decided to leave one such observation and drop the other duplicates as they had the same value for all variables. It was problematic to find the method to use for measuring the distance. We used "Measure distance" functionality of Google Map as it works as a "ruler on the map" manner and shows the same distance between two points no matter when the distance was checked. Deciding which size of pizza to choose was problematic, too. As the pizza of size 30cm, 31cm, and 32cm were observed most frequently, and most restaurants treat pizzas in this range as same size(12 inches), we decided to record these pizzas in one variable, in column marpizza_price.
+</font>
+
+## Descriptive Statistics
+<font size="3"> The following table shows some important summary in the dataset on margherita pizza price and beverage price. Average price for margherita pizza is HUF1801, and HUF457 for beverage. The mean is a little bit higher than the median in both pizza and beverage prices, which suggests a somewhat skewed distribution with a small right tail. 
+</font> 
+
+```{r, include= FALSE, message=FALSE, echo=FALSE}
+library("readxl")
+library(tidyverse)
+library(moments)
+library(ggpubr)
+library(cowplot)
+library(dplyr)
+library(kableExtra)
+# Import data into R
+path <- "../data/team-a-pizza-data.xlsx"
+pizza_data <- read_excel(path)
+
+# Check Descriptive Statistics for pizza 
+summary_pizza_price<- pizza_data %>% summarise(
+  Obs      = 'pizza',
+  n        = sum( !is.na( marpizza_price ) ),
+  mean     = round(mean(marpizza_price),digits = 2),
+  median   = median(marpizza_price),
+  min      = min(marpizza_price),
+  max      = max(marpizza_price),
+  sd      = round(sd(marpizza_price),digits = 2),
+  skew     = round(skewness(marpizza_price),digits = 2))
+
+# Check Descriptive Statistics for beverage
+summary_bev_price<- pizza_data %>% summarise(
+  Obs      = 'Beverage',
+  n        = sum( !is.na( beverage_price ) ),
+  mean     = round(mean(beverage_price),digits = 2),
+  median   = median(beverage_price),
+  min      = min(beverage_price),
+  max      = max(beverage_price),
+  sd      = round(sd(beverage_price),digits = 2),
+  skew     = round(skewness(beverage_price),digits = 2))
+
+# Join the two descriptive statistics table
+price_summary <- summary_pizza_price %>% add_row( summary_bev_price ) 
+
+```
+
+Obs | n | mean | median | min | max | sd | skew 
+----- | ---- | ---- | ---- | ---- | ---- | ---- | -----
+Pizza | 44 | 1801.18 | 1790 | 1240 | 2690 | 291.30 | 0.55
+Beverage | 44 | 457.41 | 450 | 300 | 790 | 101.78 | 1.00
+
+## Descriptive Graphs
+<font size="3"> The following two histograms side by side shows the price distributions of margherita pizza and beverage price in the whole data. A kernel density estimate is also added to the histogram for completeness. The bin size for margherita pizza is HUF100, and HUF30 for beverage. The histograms reveal many important features: Both price distributions have a single mode. The price distribution for beverage is more spread out, and has a large difference between the minimum and maximum price. 
+</font> 
+
+```{r, figures-side1, fig.show="hold", out.width="50%", message=FALSE, echo=FALSE}
+# Plot a histogram for marpizza_price with a kernel density estimate
+ggplot(pizza_data, aes(x = marpizza_price)) + 
+  geom_histogram(aes(y =..density..), 
+                 colour= "black", 
+                 fill = "white",
+                 binwidth = 100) +
+  geom_density(alpha=.2, fill="orange") +
+  geom_vline(aes(xintercept = mean(marpizza_price, na.rm=T)), # Add a vertical line for mean of marpizza_price and ignore NA values for mean
+             color="orange", linetype="dashed", size=1) +
+  labs(x = 'Margherita pizza Price', y = 'Density')
+
+##### Beverage price
+ggplot(pizza_data, aes(x = beverage_price)) + 
+  geom_histogram(aes(y =..density..), 
+                 colour= "black", 
+                 fill = "white",
+                 binwidth = 30) +
+  geom_density(alpha=.2, fill="orange") +
+  geom_vline(aes(xintercept = mean(beverage_price, na.rm=T)), # Add a vertical line for mean of beverage_price and ignore NA values for mean
+             color="orange", linetype="dashed", size=1) +
+  labs(x = 'Beverage Price', y = 'Density')
+```
+
+## Conditional Descriptive Graphs
+<font size="3"> This figure shows two histograms of inner and outer Budapest pizza prices, with same bin size (100 HUF). The range starts slightly below 1250 HUF in Outer and above 1250 HUF in Inner; it ends below 2350 HUF in Outer while it goes above 2650 HUF in Inner. Inner Budapest price distribution is more spread out, and price tends to be higher in Inner Budapest. Both Inner and Outer, however, have 50% price falls below 1800 HUF and 50% price above that. Also, both have a single mode, in different location, though. The mode bin in Inner is (1750, 1850), and it is (1550, 1650) for Outer.
+</font> 
+```{r, figures-side2, fig.show="hold", out.width="90%",fig.height=3,fig.width=7,message=FALSE, echo=FALSE}
+# Plot the pizza price difference between Inner and Outer Budapest in two histograms
+ggplot(data = pizza_data, aes(x= marpizza_price, fill = Inner_Outer)) +
+  geom_histogram(aes(y = ..density..), binwidth = 100, color = 'black', fill='white', alpha =0.5) +
+  geom_density(alpha=0.2, fill = 'orange')+
+  labs(x= 'Pizza Price: Inner vs. Outer Budapest', y= 'Relative Frenquency') +
+  facet_wrap(~Inner_Outer) +
+  geom_vline(aes(xintercept = mean(marpizza_price, na.rm=T)),
+             color= 'orange', linetype= 'dashed', size=1)
+```
+
+
+## Hypothesis Test
+Our question here is whether the average Margherita Pizza price in Inner and Outer Budapest the same? The following is our defined statistic, null hypothesis, and its alternative:
+ $\mu=\bar{p}_{inner}-\bar{p}_{outer}$
+$$
+\begin{aligned}
+ H_{0}:\mu =0 \\
+ H_{A}: \mu \neq0
+\end{aligned}
+$$
+Our pre-set significance level is at 5%. The following table statistics are obtained from the hypothesis test:
+
+```{r, include = FALSE, message=FALSE, echo=FALSE}
+# get the prices of pizzas in Inner Budapest
+inner_values <- pizza_data$marpizza_price[pizza_data$Inner_Outer == "Inner"]
+# get the prices of pizzas in Outer Budapest
+outer_values <- pizza_data$marpizza_price[pizza_data$Inner_Outer == "Outer"]
+# create the data frame of pizza prices in  Inner and outer Budapest and their difference
+pizza_df <- data.frame("inner_prices" = inner_values, "outer_prices" = outer_values, "p_diff" = inner_values - outer_values)
+t.test(pizza_df$p_diff, mu = 0)
+```
+t | df | p-value | 95 % confidence interval | mean of x
+----- | ---- | ---- | ---- | ---- | ---- 
+1.31 | 21 | 0.20 | -68.96 to 303.14 | 117.09 
+
+The t-statistic is 1.31, well within ±2SE (Do not Reject region), thus we cannot reject the null hypothesis of zero difference. In addition, from P-value of 0.2047, which means that the smallest significance at which we can reject the null is 20.47%, far larger than our pre-set initial target of 5%, we cannot reject the null.
+
+The 95% confidence interval [-68.95722, 303.13904] contains $H_{0}$ value of zero, which means we are 95% confident that the true average price will not fall outside this range. We can expect that on average, the null hypothesis is rejected 5% of the time given a 5% level of significance and that on average, a type I error will occur 5% of the time.
+
+In one word, the average Margherita Pizza price in Inner and Outer Budapest is the same, based on our study.

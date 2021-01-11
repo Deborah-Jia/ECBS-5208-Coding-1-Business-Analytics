@@ -1,0 +1,125 @@
+---
+title: 'session 6'
+author: CEU mentoring
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+
+
+Exercise 1
+Write a function that calculates number a to the power of b, but let b have a default value of 2.
+
+
+```{r, echo=FALSE}
+library(ggplot2)
+library(prettydoc)
+# https://www.r-exercises.com/2018/04/27/well-behaved-functions-exercises/
+
+# Solutions
+# https://www.r-exercises.com/2018/04/27/well-behaved-functions-solutions/
+
+
+
+
+```
+
+Exercise 2
+Write a function that changes the value of pi in the R global environment to whatever you specify as the argument. Note: it is not recommended to re-define the value of “pi” in a real-life R program.
+
+Example
+
+pi
+
+[1] 3.141593
+
+chpi(4)
+
+pi
+
+[1] 4
+
+chpi("I like cats")
+
+pi
+
+[1] "I like cats"
+
+
+
+Exercise 3 
+Create a function which return a data frame like the example.
+The input of the function will be the number of rows of the data frame
+
+```{r, echo=FALSE}
+random_df  <- function(number_of_rows=10) {
+  
+  weight <- sample(50:95, number_of_rows, replace = T)
+  height <- sample(150:210, number_of_rows, replace = T)
+  t_class <- sample(c('A', 'B', 'C', 'D'), number_of_rows, replace = T)
+  birth_date <- sample(seq(as.Date('1990-01-01'), as.Date('2000-01-01'), 'days'), number_of_rows, replace = T)
+  tdf <- data.frame('weight'= weight, 'height' = height, 'class' = t_class, 'birth_date'= birth_date )
+  tdf$age_days <- as.numeric(Sys.Date() - tdf$birth_date)
+  tdf$age_year <- round(tdf$age_days/365, 1)
+  return(tdf)
+  
+}
+
+
+```
+
+
+```{r}
+print(random_df(15))
+
+```
+
+Exercise 4 
+Create a function which print a random walk just like in previous class and return with the dataframe.
+
+
+```{r, echo=FALSE}
+get_random_walk  <- function(forward_length, backward_length, distance) {
+  all_steps <- NULL
+while (TRUE) {
+  t_step <- sample(c(forward_length, (backward_length* -1) ), 1)
+  all_steps <- c(all_steps, t_step)
+  t_progress<- tail(cumsum(all_steps), 1)
+  if (t_progress >=distance) {
+    print(paste0('I need ', length(all_steps), ' steps to get home.'))
+    break()
+  }  
+}
+
+df <- data.frame('steps'= 1:length(all_steps), 'progress'= cumsum(all_steps) )
+
+plot(ggplot(df, aes(x=steps, y=progress))+
+  geom_line()+
+  theme_bw()
+)
+return(df)
+}  
+
+
+```
+
+
+
+```{r}
+get_random_walk(forward_length = 1, backward_length = 0.9, distance = 100)
+```
+
+```{r}
+head(df)
+```
+
+Go to [this site](https://www.r-exercises.com/2017/04/20/user-defined-functions-in-r-part-1/) and solve the tasks
+
+
+
+
+
+
+

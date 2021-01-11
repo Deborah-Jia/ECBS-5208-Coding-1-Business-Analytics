@@ -115,7 +115,8 @@ df %>%
 
 summary( df )
 
-# Check the main parameter of interests and potential confounders:
+# Check the main parameter o
+f interests and potential confounders:
 
 # score 4
 ggplot( df , aes(x = score4)) +
@@ -199,9 +200,9 @@ numeric_df <- keep( df , is.numeric )
 cT <- cor(numeric_df , use = "complete.obs")
 
 # Check for highly correlated values:
-sum( cT >= 0.8 & cT != 1 ) / 2
+sum( abs(cT) >= 0.8 & cT != 1 ) / 2
 # Find the correlations which are higher than 0.8
-id_cr <- which( cT >= 0.8 & cT != 1 )
+id_cr <- which( abs(cT) >= 0.8 & cT != 1 )
 pair_names <- expand.grid( variable.names(numeric_df) , variable.names(numeric_df) )
 # Get the pairs:
 high_corr <- pair_names[ id_cr , ]
@@ -210,7 +211,7 @@ high_corr
 # Results:
 #   - only those which are 
 #       a) possible outcomes, 
-#       b) not inteded to include in the main regression
+#       b) not intended to include in the main regression
 # Remove the un-needed variables
 rm( numeric_df, id_cr, pair_names )
 
@@ -236,11 +237,19 @@ rm( numeric_df, id_cr, pair_names )
 
 
 # reg1: NO control, simple linear regression
+<<<<<<< HEAD
+reg1 <- lm_robust(  score4 ~ stratio, data = df )
+summary( reg1 )
+
+# reg2: NO controls, use piecewise linear spline(P.L.S) with a knot at 18
+reg2 <- lm_robust( score4 ~ lspline( stratio , 18 ), data = df )
+=======
 reg1 <- lm_robust( score4 ~ stratio , data = df )
 summary( reg1 )
 
 # reg2: NO controls, use piecewise linear spline(P.L.S) with a knot at 18
 reg2 <- lm_robust( score4 ~ lspline( stratio , 18 ) , data = df )
+>>>>>>> 6bfbd4452a5cc86dabdd71dbde14a311de087424
 summary( reg2 )
 
 # Extra for reg2: 
@@ -248,7 +257,11 @@ summary( reg2 )
 #     and add their interaction as well
 # How it is different from P.L.S? Is the parameter of interest statistically different? 
 # Hint: use 2*Std.Error or CI Lower and CI Upper for comparing intervals!
+<<<<<<< HEAD
+reg21 <- lm_robust(  score4 ~ stratio + (stratio > 18) + stratio*(stratio > 18), data = df )
+=======
 reg21 <- lm_robust( score4 ~ stratio + (stratio > 18) + stratio*(stratio > 18) , data = df )
+>>>>>>> 6bfbd4452a5cc86dabdd71dbde14a311de087424
 summary( reg21 )
 
 ###
@@ -265,14 +278,14 @@ summary(fit_seg)
 # reg3: control for english learners dummy (english_d) only. 
 #   Is your parameter different? Is it a confounder?
 
-reg3 <- lm_robust( , data = df )
+reg3 <- lm_robust( score4 ~ english_d , data = df )
 summary( reg3 )
 
 # Extra for reg3
 # You may wonder: what if the student-to-teacher ratio is different for those school, 
 #   where the % of english learners are more than 1% (english_d)
 # We can test this hypothesis! use interactions!
-reg31 <- lm_robust( , data = df )
+reg31 <- lm_robust(score4 ~ lspline(stratio , 18) + lspline(stratio , 18) , data = df )
 summary( reg31 )
 
 # You can look at Pr(>|t|) to check if they are zero or

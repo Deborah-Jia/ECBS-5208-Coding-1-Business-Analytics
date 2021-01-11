@@ -22,11 +22,11 @@ library(haven)
 library(tidyverse)
 
 # CHECK WORKING DIRECTORY - CHANGE IT TO YOUR WORKING DIRECTORY
-dir <- "/Users/agostonreguly/Documents/Egyetem/CEU/Teaching_2020/Coding_with_R/git_coding_1/ECBS-5208-Coding-1-Business-Analytics/Class_10/data/"
+dir <- "/Users/wodediannao/Desktop/ECBS-5208-Coding-1-Business-Analytics/Class_10/data/"
 
 
 # load in raw data and save in csv
-share <- haven::read_stata(paste0(dir, "raw/easySHARE_rel7-1-0.dta"))
+share <- haven::read_stata(paste0(dir, "easySHARE_rel7-1-0.dta"))
 
 # Rename br015_ to br015 (Sports or activities that are vigorous)
 names(share)[names(share) == 'br015_'] <- 'br015'

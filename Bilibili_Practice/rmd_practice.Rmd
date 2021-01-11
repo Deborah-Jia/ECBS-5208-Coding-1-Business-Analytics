@@ -1,0 +1,86 @@
+---
+title: "rmd_exercise"
+author: "Deborah"
+date: "12/3/2020"
+output: html_document
+---
+Exercise 3 Display the summary of “cars” dataset in your report. HINT: Use summary().
+
+```{r}
+summary(cars)
+```
+
+Exercise 4
+
+Make a plot of the “cars” dataset under the summary you just created. HINT: Use plot().
+
+You can also embed plots, for example:
+
+```{r} 
+plot(cars) # default of echo is true
+```
+Exercise 5
+
+Create a small experimental dataframe and dipslay it in your report. HINT: Use data.frame().
+```{r}
+L3 <- LETTERS[1:3]
+fac <- sample(L3, 10, replace = TRUE)
+d <- data.frame(x = 1, y = 1:10, fac = fac)
+d # no need to add "print()"
+```
+Exercise 7
+
+Load the package “knitr” in your .Rmd file. and hide the code chunk. HINT: Use echo.
+```{r,echo= F}
+library(knitr)
+```
+Exercise 9
+
+Set fig.width and fig.height of your plot to 5.
+```{r, fig.width=5, fig.height=5}
+plot(cars)
+```
+
+Exercise 10
+
+Change the file format of your plot from .png to .svg. HINT: Use dev.
+```{r,fig.width=5, fig.height=5, echo=FALSE,,dev= svg}
+plot(cars)
+```
+
+Exercise 1
+
+Make a table out of the object dataframe you created and set its numbers to have one significant figure. HINT: Use kable().
+```{r, knitr}
+kable(d, digits = 1)
+```
+
+Exercise 6
+
+Create manually a small table for your dataframe.
+```{r, knitr, echoo =  false, warning=false}
+A <- c("Bob", "Tom", "Bill", "Joe")
+kable(dataframe, digits = 1)
+```
+
+Exercise 7
+
+Apply right alignment to the column “B”. # by default it's already alightment to B column
+
+
+Exercise 8
+
+Create an unordered list of the contents of column “A” of your dataframe. # copy and past
+
+Exercise 9
+
+Transform the list you just created to ordered. # copy and past
+
+
+
+
+
+
+
+
+

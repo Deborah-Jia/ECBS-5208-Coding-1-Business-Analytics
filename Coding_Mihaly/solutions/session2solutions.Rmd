@@ -1,0 +1,145 @@
+---
+title: session2
+author: your name
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+### Create a folder somewhere and name it R_codes
+### Create a project name it mentoring_2, and select the R_codes folder to base folder
+
+### Print out the workng directory
+```{r }
+library(prettydoc)
+print(getwd())
+# you can change it with setwd() 
+```
+
+
+### Download the AMZN data from ceulearning
+### Save it into the working directory
+### Read the data with fullpath and with relativ path
+```{r }
+# if you created a working directory, file name is enough
+# write '' and press tab it will list out the current filepath
+df <- read.csv(file = 'AMZN.csv')
+
+#full path 
+df<- read.csv('/home/mihaly/R_codes/R_mentoring/AMZN.csv')
+# if you are in mac startswith '/Users/'
+# on windows 'C:/' and always press tab
+ 
+
+
+
+```
+
+
+### How can you comment multiple lines?
+```{r }
+# print your answer 
+# it is also uncomment the selected rows
+print('ctrl + shift+ c')
+```
+
+### How can you add the pipe symbol?
+```{r }
+# print your answer 
+print('ctrl + shift + m')
+```
+
+### How can you insert code block? Why is it good?
+```{r }
+# print your answer 
+print('code -> insert chunk')
+```
+
+
+### Install a package called rtsdata
+
+
+
+```{r }
+#install.packages('rtsdata') 
+library(rtsdata)
+ticker <- 'TSLA'
+start_date <- '2020-01-01'
+end_date <- Sys.Date()
+df <- data.frame(ds.getSymbol.yahoo(ticker, from = start_date, to = end_date))
+
+```
+
+### Rename the header, to open, high,low, close, volume, adjusted,
+
+```{r }
+#it is a vector
+print(names(df))
+# you can change element one by one
+print(names(df)[1])
+names(df)[1] <- 'open'
+
+# but you can change also in one line
+names(df) <- c('open', 'high', 'low', 'close', 'volume', 'adjusted')
+
+
+
+
+```
+
+
+### Create a column which contains the dates value
+```{r }
+# the date values are in row.names 
+# print the first ten
+print(row.names(df)[1:10])
+print(head(row.names(df), n = 10))
+
+# createing a new column is simple just use dataframe name and $ and what you write after that will be the name of new column
+df$date <- row.names(df)
+# you can also create a new colmn in this way
+df[['date']] <-  row.names(df)
+
+#  [['column_name']] is same as $column_name
+
+```
+
+
+### Delete the adjusted column
+```{r }
+# just send back null to any vector
+df$adjusted <- NULL
+```
+
+### Create a column which indicate that is the close price is above the mean of close price use ifelse
+```{r }
+#this is a vector
+ifelse(df$close > mean(df$close), 'it is above', 'it is below')
+# you can assign into a column
+df$above_mean <- ifelse(df$close > mean(df$close), 'it is above', 'it is below')
+```
+
+### Create a column with the year value it should be string
+```{r }
+df$year <- substring(df$date, 1, 4  )
+
+
+```
+
+### Save the clean data into xlsx, csv, rds format, save table it with '#'separator as .txt 
+```{r }
+#install.packages("writexl")
+library(writexl)
+writexl::write_xlsx(df,'tsla_data.xlsx')
+write.csv(df, 'tsla_data.csv') 
+write.csv(df, 'tsla_data_without_rownames.csv', row.names =F ) # if you do not want to ad row.names
+saveRDS(df, 'tsla_data.rds')
+write.table(df, 'tlsa_data_with_hashtag.txt', sep = '#')
+
+
+
+```
+
+### Change the theme of rmd with preaty doc
+# https://prettydoc.statr.me/index.html

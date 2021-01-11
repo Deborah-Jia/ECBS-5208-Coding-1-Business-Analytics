@@ -1,0 +1,545 @@
+---
+title: "End of Chapter - Data Exercises - 200692"
+date: "Dec 24, 2020"
+output: pdf_document
+---
+
+# Chapter 7.3
+
+*Analyze the hotel price-distance to the center pattern for another city. Select a city from the large hotels-Europe data set. Keep hotels only, those with 3 to 4 stars, for a November 2017 weekday. Examine the distribution of the distance variable and drop observations if you think you should. First estimate a bin scatter with four bins and then a lowess regression. Visualize the results and summarize the most important findings from these non-parametric regressions. Then move on to estimate a simple linear regression and interpret its coefficients. Compare your results to what we found for Vienna.*
+
+I choose *Milan* as the target city to study. First, let's do some housekeeping work to find the data required(city of Milan, hotels with 3 to 4 stars, a November 2017 weekday). The input is a csv file of hotelbookingdata, and the output is hotel_Milan.csv.
+
+```{r setup, include=FALSE}
+# packages
+library(tidyverse)
+library(moments)
+library(knitr)
+library(lspline)
+library(estimatr)
+library(pander)
+library(rvest) # scrap all info from the website
+library(data.table) # create table to hold all info
+library(dplyr) #clean data in the dataframe
+library(ggplot2) # to draw plots
+library(stringr) # intercept characters from a tring
+library(ggExtra) # make extra plots
+library(tidyr) # wrangle dataframe
+require(scales) # change the scale of axis in plots
+library(ggthemes) # change the themes of plots
+library('knitr') # to make the screenshot of data frame prettier
+library(kableExtra)
+library("huxtable")
+library(jtools)   
+
+# Import raw data
+data_in <- "~/Desktop/ECBS-5208-Coding-1-Business-Analytics/chapter_end_exercise/da2_exercise/data/"
+b_data <- read_csv(paste0(data_in,"raw/hotelbookingdata.csv"))
+
+# Have glimpse on data
+glimpse(b_data)
+
+# Create a new variable
+b_data <- mutate( b_data , nnights = 1 )
+
+# Clean accommodationtype column
+b_data <- separate( b_data , accommodationtype , "@" ,
+                    into = c("garbage","accommodation_type") )
+# Remove the variable garbage
+b_data <- select( b_data , -garbage )
+
+# Correct the guest review rating into simple numeric variable
+b_data <- separate( b_data , guestreviewsrating , "/" , 
+                    into = c( "ratings" ) )
+typeof(b_data$ratings)  
+# Convert ratings to numeric values
+b_data$ratings <- as.numeric( b_data$ratings )
+
+typeof(b_data$ratings)
+
+# Mutate all the distance measures
+b_data <- mutate( b_data , 
+                  distance = as.numeric(gsub("[^0-9\\.]","", center1distance ) ),
+                  distance_alter = as.numeric(gsub("[^0-9\\.]","", center2distance ) ) )
+
+## Rename variables
+b_data <- rename( b_data , 
+                  rating_count = rating_reviewcount,
+                  ratingta = rating2_ta , 
+                  ratingta_count = rating2_ta_reviewcount,
+                  country = addresscountryname )
+
+## Replacing missing values
+# look at key variable: stars
+b_data <- rename( b_data , stars = starrating )
+table(b_data$stars)
+# Replace with Na
+b_data <- mutate(b_data , stars = na_if( stars , 0 ) )
+table(b_data$stars)
+
+#Filter out observations which do not have id
+b_data <- filter( b_data , !is.na(hotel_id) )
+
+# Filter out duplicates
+sum(duplicated(b_data))
+# Remove duplicates
+b_data <- filter( b_data , !duplicated( b_data ) )
+# Remove duplicates to specific variables
+sub_data <- subset( b_data , select = c(country,hotel_id))
+b_data <- filter( b_data , !duplicated( 
+                  subset( b_data , select = c( country,hotel_id,distance,
+                                               stars, ratings, price, year, month,
+                                               weekend, holiday ) ) ) )
+
+# Finally hotels Milan
+b_data <- rename( b_data , city = s_city )
+hotel_Milan <- filter( b_data , city == "Milan" )
+
+# Filter multiple conditions
+hotel_Milan <- filter( hotel_Milan , 
+                        year == 2017 & month == 11 & weekend == 0,
+                        accommodation_type == "Hotel" , 
+                        stars >= 3 & stars <= 4,
+                        price < 1000 )
+# Writing out csv
+write_csv( hotel_Milan , paste0( data_in, "clean/hotel_Milan.csv"))
+```
+
+```{r,echo=F, message=FALSE, warning=FALSE, out.width= "50%"}
+# Create descriptive table
+hotel_Milan <- read_csv(paste0(data_in, "clean/hotel_Milan.csv"))
+
+summary_distance <- hotel_Milan %>% summarise(
+  Obs      = 'distance',
+  n        = sum( !is.na( distance ) ),
+  Mean     = round(mean(distance),digits = 2),
+  Median   = median(distance),
+  Min      = min(distance),
+  Max      = max(distance),
+  Std.      = round(sd(distance),digits = 2),
+  Skew     = round(skewness(distance),digits = 2)) %>% as.data.frame()
+
+summary_distance  %>% kable(caption = "Summary statistics of Hotel Distance")
+```
+
+## Examine the Distribution of the Distance
+
+As a result, we get a sample of 403 observations, where we filter hotels as required and excluded hotels with prices exceeding 1000 Euros. From Table 1 and Figure 1 we notice that:
+
+1.  All hotels are within the range of [0, 30] miles, with most of the hotels within 5 miles to the city center.
+2.  The mean value of hotel distance is far larger than median value, so its distribution plot is skewed right, with a long right tail.
+
+There is a gap between hotels within 20 miles and farther than 20 miles to the city center, and apparently those fall outside the range of (0,20) are outside Milan. So, I decided to drop these observations.
+
+To learn about the average price of hotels with differing distances to the city center, we create bin scatters(Figure 2) by splitting the data into four bins([0,5],[5,10],[10,15] and [15,20]), with equal bandwidth of 5 miles. Also, we create a lowess non-parametric model(Figure 3) to approximate the regression.
+
+## Bin Scatter and Lowess Regression
+```{r echo=F, warning=FALSE, warning=FALSE, message=FALSE ,out.width= "50%"}
+# Draw the histogram of distance
+ggplot(hotel_Milan, aes(x=distance)) +
+  geom_histogram()+
+   labs( caption = "Figure 1. Histogram of Distance",x='Distance (miles)',y='Number of observations') +
+  theme(plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.title.position = "plot",
+        plot.caption.position =  "plot")
+
+hotel_Milan <- filter( hotel_Milan, distance <= 20)
+
+# bin scatter with 4 bins
+
+ggplot( hotel_Milan, aes( x = distance, y = price) )+
+  stat_summary_bin( fun = 'mean' , bins = 4, geom = 'point',  size = 2 ) +
+    xlim(0,20) +
+  labs(x='Distance (miles)',y='Price (Euros)', caption = "Figure 2. Hotel price and distance to the city center: bin scatters") +
+   theme(plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.title.position = "plot",
+        plot.caption.position =  "plot")
+
+
+# lowess non-parametric regression
+ggplot(hotel_Milan, aes(x = distance, y = price )) +
+  geom_point(  )+
+  labs(x='Distance (miles)',y='Price (Euros)', caption = "Figure 3. Hotel price and distance to the city center: lowess regression and scatterplot") +
+  geom_smooth(method=loess,se=F,formula='y~x',color='red') +
+  theme(plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.title.position = "plot",
+        plot.caption.position =  "plot")
+
+# linear regression of distance on price:
+ggplot( data = hotel_Milan, aes( x = distance, y = price) ) +
+  geom_point( color="#C4961A") +
+  geom_smooth( method = lm , color = "steelblue") +
+  labs(x='Distance (miles)',y='Price (Euros)', caption = "Figure 4. Hotel price to the city center: linear regression and scatterplot") +
+  theme(plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.title.position = "plot",
+        plot.caption.position =  "plot")
+```
+
+From Figure 2 and Figure 3, we notice that:
+
+-   With four distance categories, we can see that the relationship appears to be monotonic but nonlinear: the difference in average y between the adjacent bins are not always the same. There is a larger negative difference between the [0,5] miles and [5,10] miles bins than between adjacent bins at higher distances.
+-   The smooth non-parametric regression is steeper at small distances and flatter at longer distances, but in general the line keeps a negative slope, except that in the subset of bin (2.5, 5) there is a local positive trend.
+-   Both two figures suggest a negative pattern of association between hotel price and distance to the center, hotels further away from the city center are, on average, less expensive.
+
+We've known that hotels further away from the city center are less expensive on average, but we wonder how much less expensive they can be. This is a quantitative question which requires linear regression.
+
+## Simple Linear Regression
+
+Figure 4 shows the regression line together with the scatter plot, and Table 2 produces an intercept of 148.3 and a slope of -4.8:
+
+-   The intercept is 148.3, suggesting that the average price of hotels right in the city center is 148.3 euros. But we are not sure if there is such a hotel right in the city center.
+-   The slope of the linear regression is -4.8. Hotels that are 1 mile further away from the city center are, on average, 4.8 euros cheaper in our data.
+
+```{r, fig.show="hold", echo=F, message=FALSE, warning=FALSE, out.width= "50%"}
+reg1 <- lm_robust(price ~ distance, data = hotel_Milan , se_type = "HC2" )
+# Summary statistics
+
+ModelStats <- round(as.data.frame( summary( reg1 )[[12]]),4)
+ModelStats %>% kable(caption = "Modelling Hotel Price and Distance to City center")
+```
+
+## Comparison with Hotels in Vienna
+
+Compared with our findings with hotels in Vienna, we conclude that:
+
+-   In both cities, hotels further away from the city center are, on average, less expensive.
+-   However, with 1 mile further away from the city center, hotels in Milan are much cheaper than in Vienna, with difference of 9.2 euros per mile, on average.
+-   Beyond 5 miles, hotel price in Vienna have a rather positive pattern(i.e., with 1 mile further away, the hotel becomes more expensive, on average); but the negative pattern remains the same for hotels in Milan.
+
+# Chapter 7.4
+
+*Collect data on used cars of a specific brand and type, and analyze price and age of the car. First estimate a bin scatter with two bins, then one with four bins, and then estimate a lowess regression. Visualize the results and summarize the most important findings from these non-parametric regressions. Then move on to estimate a simple linear regression and interpret its coefficients. Finally, use the results from the simple linear regression to list candidate cars for the best deal using the residuals of the linear regression.*
+
+I am interested in prevalent used **Lexus** cars in the market, so, with the help of Chrome extention SelectorGadget, I scrape all basic information of Lexus cars on [autotrader](https://www.autotrader.com/cars-for-sale/searchresults.xhtml?listingTypes=USED&sortBy=relevance&incremental=all&firstRecord=0&marketExtension=include&relevanceConfig=default&makeCodeList=LEXUS&searchRadius=0&isNewSearch=false#566675492), for required explanatory and regression analysis.
+
+```{r, include=FALSE}
+# some housekeeping work
+
+# There are 40 pages in total of Lexus cars, I use seq() to get all of them.
+Search_Lexus <- paste0("https://www.autotrader.com/cars-for-sale/lexus?incremental=all&relevanceConfig=default&channel=ATC&searchRadius=0&marketExtension=include&isNewSearch=true&showAccelerateBanner=false&sortBy=relevance&numRecords=25&firstRecord=",
+                       seq(0,975,25))
+
+
+x <- Search_Lexus[1] # Get the first search page
+
+# This Lapply function helps get all URL of Lexus cars
+# I used tricks here so as to open link like "https://www.autotrader.com/...listingId=522917099"; below lapply() takes 70 seconds to finish.
+Lexus_links <- lapply(Search_Lexus, function(x){
+    paste0( "https://www.autotrader.com/cars-for-sale/vehicledetails.xhtml?listingId=",
+            stringr::str_match(unique(read_html(x) %>% html_nodes('.positioned-overlay-base') %>%
+                                        html_nodes('a') %>%
+                                        html_attr('href')), "Id=(.*?)&")[,2])
+                    })
+# use unlist() to get a vector of links
+Lexus_links <- unlist(Lexus_links)
+
+one_Lexus_link <- Lexus_links[1] # get the first url of Lexus
+
+# the second function to get all information of one Lexus car
+process_one_car <- function(one_Lexus_link){
+
+  tlist <- list()
+  t <- read_html(one_Lexus_link)
+  tlist[['Name']] <- t %>% html_nodes(".text-size-sm-700") %>% html_text()
+
+  tlist[['Listing id']] <- gsub(".*=","",one_Lexus_link)
+
+  tlist[["Price"]] <- t %>% html_nodes(".first-price") %>% html_text()
+
+  tlist[['Link']] <- one_Lexus_link
+
+  return(tlist)
+}
+
+# use lapply() to process all links, and use rbindlist() to get a dataframe
+Lexus_df0 <- rbindlist(lapply(Lexus_links, process_one_car), fill = T)
+
+# save the raw data as csv
+write_csv(Lexus_df0, paste0( data_in, "raw/Lexus_car.csv"))
+
+Lexus_df <- read_csv(paste0(data_in, "raw/Lexus_car.csv"))
+
+# remove duplicated listing id
+Lexus_df <- filter( Lexus_df, !duplicated( Lexus_df$`Listing id`) )
+
+# change the price column into numeric
+Lexus_df$Price <- gsub(",","",Lexus_df$Price) %>% as.numeric()
+
+Lexus_df$Year <- substring(Lexus_df$Name, regexpr("2", Lexus_df$Name), regexpr("2", Lexus_df$Name) + 3) %>% as.numeric()
+
+# calculate the car age
+Lexus_df$Age <- 2021 - Lexus_df$Year
+
+# Check for missing observations
+m <- Lexus_df %>% filter( !complete.cases( Lexus_df ) )
+
+# Drop if year or price missing -> if not complete case except iso2c
+Lexus_df <- Lexus_df %>% filter( complete.cases( Lexus_df ) )
+
+# save the clean data into clean folder
+write_csv(Lexus_df, paste0( data_in, "clean/Lexus_clean.csv"))
+```
+
+## Bin Scatter and Lowess Regression
+
+As a result, we get a sample of more than 1,000 observations, with car price and age specifics in table 3.
+
+```{r, echo=F, message=FALSE, warning=FALSE, out.width= "50%"}
+Lexus_df <- read_csv(paste0(data_in, "clean/Lexus_clean.csv"))
+
+summary_Age <- Lexus_df %>% summarise(
+  Variable = 'Age',
+  n        = sum( !is.na( Age ) ),
+  Min      = min(Age),
+ '1st IQR' = round(quantile(Age, 0.25,na.rm = T),2),
+  Median   = median(Age),
+ '3rd IQR' = round(quantile(Age,0.75, na.rm = T),2),
+  Max      = max(Age),
+  Mean     = round(mean(Age),digits = 2),
+  Std.      = round(sd(Age),digits = 2),
+  Skew     = round(skewness(Age),digits = 2)) %>% as.data.frame()
+
+summary_Price <- Lexus_df %>% summarise(
+  Variable = 'Price',
+  n        = sum( !is.na( Price ) ),
+  Min      = min(Price),
+ '1st IQR' = round(quantile(Price, 0.25,na.rm = T),2),
+  Median   = median(Price),
+ '3rd IQR' = round(quantile(Price,0.75, na.rm = T),2),
+  Max      = max(Price),
+  Mean     = round(mean(Price),digits = 2),
+  Std.      = round(sd(Price),digits = 2),
+  Skew     = round(skewness(Price),digits = 2)) %>% as.data.frame()
+
+SummStats2 <- summary_Age %>% add_row(summary_Price)
+SummStats2  %>% kable(caption = 'Summary Statistics of Lexus Car Age and Price')
+```
+
+Also, we create binned scatters(with 2 and 4 bins, separately) and lowess regression(Figure 5, 6 and 7) to capture the pattern of association between Lexus used car age and prices:
+
+```{r echo=F, warning=FALSE, message=FALSE ,out.width= "50%"}
+theme_set(theme_bw())
+
+# bin scatter with 2 bins
+ggplot(Lexus_df, aes(x = Age, y = Price)) +
+  stat_summary_bin( fun = 'mean' , bins = 2, geom = 'point',  size = 2 ) +
+  labs(x='Car Age (years)',y='Price (Dollars)', caption = "Figure 5. Used Lexus Car Price to Car Age: 2-bin scatters") +
+   theme(plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.title.position = "plot",
+        plot.caption.position =  "plot") +
+  coord_cartesian(ylim = c(4000, 90000), xlim = c(0,21))
+
+# bin scatter with 4 bins
+ggplot(Lexus_df, aes(x = Age, y = Price)) +
+  stat_summary_bin( fun = 'mean' , bins = 4, geom = 'point',  size = 2 ) +
+  labs(x='Car Age (years)',y='Price (Dollars)', caption = "Figure 6. Used Lexus Car Price to Car Age: 4-bin scatters") +
+   theme(plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.title.position = "plot",
+        plot.caption.position =  "plot") +
+  coord_cartesian(ylim = c(4000, 90000), xlim = c(0,21))
+
+# lowess non-parametric regression
+ggplot(Lexus_df, aes(x = Age, y = Price)) +
+  geom_point(  )+
+  labs(x='Car Age (years)',y='Price (Dollars)', caption = "Figure 7. Used Lexus Car Price to Car Age: lowess regression and scatterplot") +
+  geom_smooth(method=loess,se=F,formula='y~x',color='red') +
+  theme(plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.title.position = "plot",
+        plot.caption.position =  "plot")
+
+# linear regression of distance on price:
+ggplot(Lexus_df, aes(x = Age, y = Price))+
+  geom_point( color="#C4961A") +
+  geom_smooth( method = lm , color = "steelblue") +
+  labs(x='Car Age (years)',y='Price (Dollars)', caption = "Figure 8. Used Lexus Car Price to Car Age: linear regression and scatterplot") +
+  theme(plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.title.position = "plot",
+        plot.caption.position =  "plot")
+```
+
+-   Both bin scatters(Figure 5, and Figure 6) suggest a negative pattern of association between used Lexus car price and age.
+-   With 4 bins, we can see that the relationship between car age and price is monotonic but nonlinear. And there is a larger difference between the [0,5] years and [5,10] years bins than between adjacent bins at older ages.
+-   Figure 7 shows the lowess non-parametric regression, together with the scatter plot.The smooth line appears to be deeper at earlier ages and flatter at older ages.
+-   In general, we uncovered across these regressions a negative slope in general, which is, used Lexus cars with older age are, on average, cheaper.
+
+## Linear Regression
+
+Still, we wonder, how much cheaper an used Lexus car can be, if it's one year older? Thus, we move on to simple linear regression to answer this quantitative question. Table 4 and Figure 8 demonstrate the result of linear regression, with an intercept of 42,306.77 and a slope of -2,605.67:
+
+```{r, fig.show="hold",echo=F, message=FALSE, warning=FALSE, out.width= "50%"}
+reg2 <- lm_robust(Price ~ Age, data = Lexus_df , se_type = "HC2" )
+# Summary statistics
+
+ModelStats2 <- round(as.data.frame( summary( reg2 )[[12]]),2)
+ModelStats2 %>% knitr::kable(caption = "Modelling Second-handed Lexus Price and Age")
+```
+
+-   The intercept is 42,306.77, suggesting that the average price of brand new Lexus cars is 42,306.77 dollars, on average.
+-   The slope of the linear regression is -2,605.67. Lexus cars that are 1 year older are, on average, 2605.67 dollars cheaper in our data.
+
+## Residual Analysis: Find the Best Deal
+```{r, figures-side1, fig.show="hold",echo=F, message=FALSE, warning=FALSE, out.width= "50%"}
+# Get the predicted y values from the model
+Lexus_df$y_pred2 <- reg2$fitted.values
+# Calculate the errors of the model
+Lexus_df$res2 <- Lexus_df$Price - Lexus_df$y_pred2
+
+# Find cars with largest negative errors
+Lexus_df %>% top_n( -5 , res2) %>%
+      select(Name, Price, y_pred2,res2,Year, Age) %>% knitr::kable(caption = "Most Under-priced Lexus Second-hand Cars, Top 5")
+```
+We've had a basic grasp of used Lexus cars, but how should we find a good deal among them? The regression line in Figure 8 shows the predicted values, while the actual value is on each scatter. The difference between them, the residual, will help us find an answer to the question. Candidates for a good deal are cars that re under-priced relative to their ages; in other words, those with most negative residuals, as shown in table 5.
+
+# Chapter 8.5
+
+*Download data on used cars of a specific brand and type, and analyze price vs age of cars in order to find a good deal. Estimate a regression that fits the pattern of association well enough. Use the results from the simple linear regression to list candidate cars for the best deal using the residuals of the linear regression. (During your analysis you may want to consider taking logs, inspecting and dealing with influential observations, experimenting with functional forms, and so on.*
+
+So, we will continue with used cars cases. Except for simple linear regression in chapter 7.4, I will also transform X or Y by taking logs.
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE, out.width= "50%"}
+My_Lexus <- read_csv(paste0(data_in, "clean/Lexus_clean.csv"))
+
+```
+
+## Transformation of Variables
+
+Taking natural logs of variables can better approximate some non-linear patterns to linear regressions, especially when the data is right-skewed. I list four models for further review:
+
+-   level-level: Price = alpha + beta \* Age
+-   log-level:   ln_Price = alpha + beta \* Age
+-   level-log:   Price = alpha + beta \* ln_Age
+-   log-log:     ln_Price = alpha + beta \* ln_Age
+
+```{r echo=F, warning=FALSE, message=FALSE ,out.width= "50%"}
+# Level - Level
+ggplot(My_Lexus, aes(x = Age, y = Price)) +
+  geom_point() +
+  geom_smooth(method = 'loess') +
+  scale_x_continuous(breaks = pretty_breaks()) +
+  scale_y_continuous(breaks = pretty_breaks()) +
+  labs(x='Car Age (years)',y='Price (Dollars)', caption = "Figure 9. Regression of Used Lexus Car Price to Car Age: level Price, level Age") +
+  theme(plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.title.position = "plot",
+        plot.caption.position =  "plot")
+# log - level
+My_Lexus %>%
+  ggplot(aes(x = Age, y = Price)) +
+  geom_point() +
+  geom_smooth(method = 'loess') +
+  scale_y_continuous(trans = log_trans(),breaks = pretty_breaks()) +
+  labs(x='Car Age (years)',y='Price (Dollars, in Scale)', caption = "Figure 10. Regression of Used Lexus Car Price to Car Age: log Price, level Age") +
+  theme(plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.title.position = "plot",
+        plot.caption.position =  "plot")
+
+# level - log
+My_Lexus %>%
+  ggplot(aes(x = Age, y = Price)) +
+  geom_point() +
+  geom_smooth(method = 'loess') +
+  scale_x_continuous(trans = log_trans(),breaks = pretty_breaks()) +
+  labs(x='Car Age (years, in Scale)',y='Price (Dollars)', caption = "Figure 11. Regression of Used Lexus Car Price to Car Age: level Price, log Age") +
+  theme(plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.title.position = "plot",
+        plot.caption.position =  "plot")
+
+# log - log
+My_Lexus %>%
+  ggplot(aes(x = Age, y = Price)) +
+  geom_point() +
+  geom_smooth(method = 'loess') +
+  scale_y_continuous(trans = log_trans()) +
+  scale_x_continuous(trans = log_trans(),breaks = pretty_breaks()) +
+  labs(x='Car Age (years, in Scale)',y='Price (Dollars, in Scale)', caption = "Figure 12. Regression of Used Lexus Car Price to Car Age: log Price, log Age") +
+  theme(plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.title.position = "plot",
+        plot.caption.position =  "plot")
+
+```
+
+Based on comparison, we select **Log-Level Model**
+
+* Substantive Reasoning: Price fluctuation measured in percentage changes is easier to interpret with age changes in absolute terms. Also, choosing relative terms means being free from arbitrary units of measurement. 
+* Statistical Reasoning: the graph gives better approximation: the scatter plot suggests a good linear pattern.
+
+## Presentation of Model Choice
+
+We chose various regression models to capture the non-linearity, including linear regression, quadratic regression, and piecewise linear regression. To prepare for aforementioned regression, we take logs of Price and square terms of Age; also we remove negative log values to maintain the validity of regression.
+
+Considering summary statistics and regression figure, we choose Log-Level Model as the final one. As it is obvious that all three figures have similar association pattern, but the Log-Level Model is much better to interpret than other two.
+
+```{r echo=F, warning=FALSE, message=FALSE ,out.width= "50%"}
+# transformation of log terms
+My_Lexus <- My_Lexus %>% mutate( ln_Price = log( Price),
+                                 Age_sq = Age^2)
+
+# Drop observations with negative infinite value of ln_death
+My_Lexus  <- My_Lexus  %>% filter( ln_Price > 0)
+
+# Simple Linear Regression
+l_reg <- lm_robust( ln_Price ~ Age , data = My_Lexus, se_type = "HC2" )
+
+ggplot( data = My_Lexus, aes( x = Age, y = ln_Price ) ) +
+  geom_point( color="#C4961A") +
+  geom_smooth( method = lm , color = "steelblue") +
+  labs(x='Car Age (years)',y='Price (Dollars, in Scale)', caption = "Figure 13. Regression of Used Lexus Car Price to Car Age: log Price, level Age") +
+  theme(plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.title.position = "plot",
+        plot.caption.position =  "plot")
+
+# Quadratic Regression
+q_reg <- lm_robust( ln_Price ~ Age + Age_sq , data = My_Lexus)
+
+ggplot( data = My_Lexus, aes( x = Age, y = ln_Price) ) +
+  geom_point( color="#C4961A") +
+  geom_smooth( formula = y ~ poly(x,2) , method = lm , color = "steelblue") +
+   labs(x='Car Age (years)',y='ln(Price, Dollars)', caption = "Figure 14. Used Lexus Car Price and Car Age: Quadratic function") +
+  theme(plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.title.position = "plot",
+        plot.caption.position =  "plot")
+
+# Piecewise linear Spline Regression
+
+p_reg <- lm_robust(ln_Price ~ lspline(Age, c(10,15,20)), data = My_Lexus)
+
+ggplot( data = My_Lexus, aes( x = Age, y = ln_Price ) ) +
+  geom_point(color = "#C4961A") +
+  geom_smooth( formula = y ~ lspline(x, c(10,15,20)) , method = lm , color = "steelblue" )+
+  labs(x='Car Age (years)',y='Price (Dollars, in Scale)', caption = "Figure 15. Used Lexus Car Price and Car Age: Piecewise linear spline") +
+  theme(plot.caption = element_text(hjust = 0, face= "italic"),
+        plot.title.position = "plot",
+        plot.caption.position =  "plot")
+
+```
+
+## Interpretation
+
+With model comparison table(See last page) and plot visualization, we can conclude:
+
+-   For second-hand Lexus cars with one year older of use, prices are 12% lower, on average.
+-   r-square = 0.74 means 74% of the variation in ln(Price) is captured by the regression, and 26% is left for residual variation.
+
+## Residual Analysis
+
+We can use residual result to find the best deals. The most negative residuals will be the best car deals for us.
+
+```{r, echo = FALSE}
+# Get the predicted y values from the model
+My_Lexus$l_reg_y_pred <- l_reg$fitted.values
+# Calculate the errors of the model
+My_Lexus$l_reg_res <- My_Lexus$ln_Price - My_Lexus$l_reg_y_pred
+# Find countries with largest negative errors
+Under_Priced <- My_Lexus%>% top_n( -5 , l_reg_res ) %>%
+  select( Name, Age, Price, l_reg_y_pred, l_reg_res,Year)
+
+kable(Under_Priced)
+```
+
+```{r, message = F, warning = F, echo = F,size=1, fig.height= 3, fig.align='center'}
+# Model Summary Statistics #
+mss <- export_summs(l_reg, p_reg, q_reg,
+                       model.names = c("Ln_Price",
+                                       "Ln_Price",
+                                       "Ln_Price"))
+as_hux(mss)
+```

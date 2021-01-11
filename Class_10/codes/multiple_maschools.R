@@ -51,7 +51,7 @@ rm( MASchools )
 #
 #####
 # Model setup
-# Outcome variable:      score4  - 4th grade score (math + english + science).
+# Outcome variable:      score4  - 4th grade score (math + English + science).
 # Parameter of interest: stratio - Student-teacher ratio
 #
 # Thinking about potential confounders:
@@ -127,13 +127,13 @@ ggplot( df , aes(x = stratio)) +
   geom_histogram(binwidth = 0.5,fill='navyblue') +
   labs(x = "Student to teacher ratio") 
 
-# english
+# English
 ggplot( df , aes(x = english)) +
   geom_histogram(binwidth = 0.5,fill='navyblue') +
-  labs(x = "Ratio of english leearners") 
+  labs(x = "Ratio of english learners") 
 
-# Create a dummy variable from english learner:
-# 1 if ratio of english speakers is larger than 1%
+# Create a dummy variable from English learner:
+# 1 if ratio of English speakers is larger than 1%
 # 0 otherwise
 df <- df %>% mutate( english_d = 1*(english>1))
 
@@ -185,7 +185,7 @@ chck_sp(df$lunch)
 # Seems like there is a break around 15% -> try P.L.S
 
 # Average teacher salary
-chck_sp(df$salary)
+chck_sp(df$salary) # sp - scatter plot
 # Seems like there is a break around 35 and maybe around 40 -> try P.L.S
 
 # Think about weightening: there is no natural candidate for this...
@@ -199,9 +199,9 @@ numeric_df <- keep( df , is.numeric )
 cT <- cor(numeric_df , use = "complete.obs")
 
 # Check for highly correlated values:
-sum( abs( cT ) >= 0.8 & cT != 1 ) / 2
+sum( abs(cT) >= 0.8 & cT != 1 ) / 2
 # Find the correlations which are higher than 0.8
-id_cr <- which( abs( cT ) >= 0.8 & cT != 1 )
+id_cr <- which( abs(cT) >= 0.8 & cT != 1 )
 pair_names <- expand.grid( variable.names(numeric_df) , variable.names(numeric_df) )
 # Get the pairs:
 high_corr <- pair_names[ id_cr , ]
@@ -210,7 +210,7 @@ high_corr
 # Results:
 #   - only those which are 
 #       a) possible outcomes, 
-#       b) not inteded to include in the main regression
+#       b) not intended to include in the main regression
 # Remove the un-needed variables
 rm( numeric_df, id_cr, pair_names )
 
@@ -302,7 +302,7 @@ summary( reg5 )
 
 ##
 # Summarize our findings:
-data_out <- "/Users/agostonreguly/Documents/Egyetem/CEU/Teaching_2020/Coding_with_R/git_coding_1/ECBS-5208-Coding-1-Business-Analytics/Class_10/out/"
+data_out <- "/Users/wodediannao/Desktop/ECBS-5208-Coding-1-Business-Analytics/Class_10/out/"
 htmlreg( list(reg1 , reg2 , reg3 , reg4 , reg5),
          type = 'html',
          custom.header = list("Average test scores for 4th graders"=1:5),
@@ -377,8 +377,8 @@ reg5_lm <- lm( score4 ~ lspline( stratio , 18 ) + english_d
                + lspline(salary,c(35,40)) + exptot 
                + log( income ) + scratio , data = subset(df,complete.cases(df) ) )
 
-BIC(reg4_lm,reg5_lm)
-AIC(reg4_lm,reg5_lm)
+BIC(reg4_lm,reg5_lm) #Bayesian criterion
+AIC(reg4_lm,reg5_lm) #Akaike
 
 ##
 # EXTERNAL VALIDITY:
@@ -438,11 +438,3 @@ htmlreg( list(reg1_e , reg2_e , reg3_e , reg4_e , reg5_e),
 # Home-work: apply the same methods for California schools
 # data("CASchools")
 # For details see: https://www.rdocumentation.org/packages/AER/versions/1.2-9/topics/CASchools
-
-
-
-
-
-
-
-

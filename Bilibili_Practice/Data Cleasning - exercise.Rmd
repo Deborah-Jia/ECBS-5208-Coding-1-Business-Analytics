@@ -1,0 +1,31 @@
+---
+title: 'Data wrangling : Cleansing – Regular expressions'
+author: "Jia-li"
+date: "12/4/2020"
+output: html_document
+---
+run the following commands to create the strings that we will work on.
+```{r }
+textmeta <- "R|is|cool,|so|are|you|that|you|are|for|__|your|skills|by|solving|this|exercise. Moreover parenthesis symbol is []! Finally once you are done with this set go for a coffee, you deserve it!"
+
+textseq <- "I hope you are using R version 3.4.0 and you have updated on 2017-04-21, with nickname:'You stupid Darkness'."
+```
+
+Exercise 1
+
+From object textmeta substitute the full stop (‘.’) with exclamation mark (‘!’) and assign the result to the object text.
+
+```{r}
+gsub('.','!', textmeta)
+```
+
+Exercise 2
+
+From object text substitute the double underscore (‘__’) with ‘enhancing’ and assign the result to the object text.
+```{r}
+textmeta <- gsub('__','enhancing', textmeta)
+```
+
+Exercise 3
+
+From object text substitute the backslash (‘\’) with a letter-spacing (‘ ‘) and assign the result to the object text.

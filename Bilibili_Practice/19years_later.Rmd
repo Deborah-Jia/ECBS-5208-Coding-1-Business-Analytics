@@ -1,0 +1,56 @@
+---
+title: Nineteen Years Later
+author: Harry Potter
+date: July 31, 2016
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+# heading 1
+## heading 2
+
+* first list
+  * sub_list
+  
+**Bold**
+*Italic*
+
+1. first item
+    1. first sub
+        1. sub-sub
+            1. sub-sub-sub
+    2. second sub
+2. second item
+    1. sub
+        1. sub-sub
+            1. sub-sub-sub
+
+```{r, include=FALSE, message=FALSE, echo=F, eval=F}
+2+3
+library(ggplot2)
+```
+
+```{r}
+mtcars
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
