@@ -15,27 +15,29 @@ library(tidyverse)
 library(ggplot2)
 df <- flights
 # http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html
+# read about package nycflights13:
+#  https://cran.r-project.org/web/packages/nycflights13/nycflights13.pdf
 p1 <- 
 mtcars %>% 
   ggplot(aes(x=mpg , y=hp)) + 
   geom_point()
 
+# these two graphs are same, but option 1 uses pipes, which helps especially with lots of functions
 p2 <-   ggplot(data = mtcars, aes(x=mpg , y=hp)) + 
   geom_point()
-
-
 ```
 
 
-# Which airplane flought the most times?
+# Which airplane fought the most times?
 ```{r, echo=FALSE,message=F, warning=FALSE}
 df %>%
-  filter(!is.na(tailnum)) %>% 
-  group_by(tailnum)%>%
-  summarise('number_of_flights' = n() ) %>%
-  arrange(-number_of_flights)%>%
-  head(1)
+  filter(!is.na(tailnum)) %>% # filter those without N/A
+  group_by(tailnum) %>% 
+  summarise('number_of_flights' = n() ) %>% # calculate the number of observations in each group
+  arrange(-number_of_flights ) %>% # here using ".by_group = TRUE" or not doesn't make a difference, but it matters in other occasions!
+  head(2)
 
+# read mor about arrange() in the end
 ```
 
 # Create the departure delay histogram
@@ -46,15 +48,15 @@ ggplot(aes(x=dep_delay)) +
   theme_bw()+
   labs(x='Departure delay', y='Number of observation', title = 'Departure delay histogram')
 
-
 ```
 
 
 # Number of flights to destination
 ```{r, echo=FALSE, message=F, warning=FALSE}
-# number of flights from origin
+
 df %>%
   group_by(dest)%>%
+  # use summarize to calculate numbers, mean value...
   summarise('number_of_flights'=n()) %>%
   arrange(-number_of_flights) %>% 
   ggplot(aes(x=dest, y=number_of_flights) ) +
@@ -73,26 +75,26 @@ df %>%
   summarise('number_of_flights'=n()) %>%
   arrange(-number_of_flights) %>% 
   head(10) %>% 
-  ggplot(aes(x = reorder(dest, -number_of_flights), y = number_of_flights)) + geom_col()+
+  # reorder(a,b) put a in b's order as desired
+  ggplot(aes(x = reorder(dest, -number_of_flights), y = number_of_flights)) + 
+  geom_col() +
   theme_classic()+
   labs(title='Top 10 most popular destination', y='Number of flights', x = 'Destination')
-
-
-
-
 
 ```
 
 # The most exact destinations (dep_delay_is the least on average top 10)
 ```{r, echo=FALSE, message=F, warning=FALSE}
 
-
 df %>%
   group_by(dest)%>%
-  summarise('mean_delay'= mean(dep_delay, na.rm = T)) %>%
+  summarise('mean_delay'= mean(dep_delay, na.rm = T)) %>% #exclude N/A values
   arrange(mean_delay)%>%
   head(10)%>%
-  ggplot(aes(dest, mean_delay)) + geom_point(color='red') + labs(title = 'The most exact destinations', x='Destination', y='Average late') + theme_light()
+  ggplot(aes(x= reorder(dest, mean_delay), y = mean_delay)) + 
+  geom_point(color='red') + 
+  labs(title = 'The most exact destinations', x='Destination', y='Average late') + 
+  theme_light()
 
 
 ```
@@ -108,14 +110,28 @@ iris %>%
 
 ```
 
+PS: reading more about arrange()
+arange() means arrange data in an customised order
 ```{r, echo=FALSE}
+arrange(mtcars, cyl, disp) # first obey the sequence of cyl, then disp. The default is ascending.
 
+# below two are basically the same, and option 1 is even better
+arrange(mtcars, cyl, -disp) 
+arrange(mtcars, cyl,desc(disp))
 ```
 
+what's the difference among rank(), sort() and order()?
 
+1. sort() sorts the vector in an ascending order.
+2. rank() gives the respective rank of the numbers present in the vector; the default mode is descending (i.e. the largest number will get 1).
+3. order() returns the indices of the vector in a sorted order.
+```{r, include=TRUE}
+print(sort(c (3, 1, 2, 5, 10))) # it manipulates numbers in the vector
+print(rank(c (30, 1, 2, 5, 10))) # gives the rank of number in the vector # indexing
+print(order(c (30, 1, 25, 50, 4))) # the second one should be in the first position, then the fifth one, then...
+print(reorder(c (30, 1, 2, 5, 10),c(30, 1, 25, 50, 40)))
+```
 
-
-
-
-
-
+what's the difference between summarise() and mutate()?
+1. mutate() adds a new column in the dataframe
+2. summarise() create a new statistics in the memory.

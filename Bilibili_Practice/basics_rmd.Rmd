@@ -3,8 +3,6 @@ title: "My analysis"
 date: 2020-10-12
 author: "Team XY"
 output: html_document
-        #html_document
-  
 ---
 
 ## This is a section name
@@ -27,14 +25,14 @@ You can highlight your text using **Bold** values or *italics*. Or you can creat
 
 ```{r , include = FALSE}
 library(tidyverse)
-data_in <- "/Users/wodediannao/Downloads/ECBS-5208-Coding-1-Business-Analytics-master\ 2/Class_2/data/raw"
+data_in <- "~/Desktop/ECBS-5208-Coding-1-Business-Analytics/Class_2/data/raw"
 hv <- read.csv( paste0(data_in,"/hotelbookingdata.csv") )
 ```
 
 Then you will not see anything...
 
 ## Or you can include your scripts as well
-```{ r }
+```{r }
 summary(hv$price)
 ```
 
@@ -47,17 +45,17 @@ summary(hv$price)
 ## Including Plots
 
 You can also embed plots, for example:
-
 ```{r, echo=FALSE}
-ggplot( data = hv , aes( x = price ) ) +
-  geom_histogram( aes(y = ..density..) , fill = 'navyblue' , binwidth = 15 ) +
+ggplot( data = hv , aes( x = price ) ) + 
+  # within aes(), you can try density.count/ncount/ndensity
   geom_density( aes(y = ..density..) , fill = 'red' , bw = 15, alpha = 0.5 ) +
-  labs(x='Hotel Prices in Vienna',y='Density')+
-  scale_y_continuous(labels = scales::percent)
+  labs(x='Hotel Prices in Vienna',y='Density') +
+  scale_y_continuous(labels = scales::percent) # change the scale of y axis
 ```
 
 ## Different size of plots
 ```{r, echo=FALSE, out.width = '50%' }
+# the difference between two graphs is the binwidth
 ggplot( data = hv , aes( x = price ) ) +
   geom_histogram( aes(y = ..density..) , fill = 'navyblue' , binwidth = 15 ) +
   labs(x='Hotel Prices in Vienna',y='Density')+
@@ -102,7 +100,7 @@ print(xtb, comment=FALSE, include.rownames=FALSE)
 
 # Summary of your resutls
 
-Here you summarize your results and you may include some code as well `r round(mean(hv$price),2)` in line.
+Here you summarize your results and you may include some code as well `r round(mean(hv$price),2)` in line. 
 
 ## Further information on Rmarkdown
 R for data science Chapter 21 full and 23 first part (until page 475)

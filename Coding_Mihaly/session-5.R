@@ -1,18 +1,21 @@
-# Exercise 1 Write a for loop that iterates over the numbers 1 to 7 and prints the cube of each number using print().
+# Exercise 1 Write a for loop that iterates over the numbers 1 to 7 
+# and prints the cube of each number using print().
 
 for (i in 1:7) {
   print(i^3)
 }
 
-# Exercise 2 Write a for loop that iterates over the column names of the inbuilt iris dataset and print each together with the number of characters in the column name in parenthesis. Example output: Sepal.Length (12). Use the following functions print(), paste0() and nchar().
+# Exercise 2 Write a for loop that iterates over the column names of the inbuilt iris data set 
+# and print each together with the number of characters in the column name in parenthesis. 
+# Example output: Sepal.Length (12). Use the following functions print(), paste0() and nchar().
 
 iris
-for (i in c(colnames(iris))) {
-  print(paste0(i," (",nchar(i),")"))
+for (i in c(colnames(iris))) { # it automatically assigns index to each column names
+  print(paste0(i," (",nchar(i),")")) # nchar() can calculate number of characters
 }
 
-# Exercise 3 Write a while loop that prints out standard random normal numbers (use rnorm()) but stops (breaks) if you get a number bigger than 1.
-
+# Exercise 3 Write a while loop that prints out standard random normal numbers 
+# (use rnorm()) but stops (breaks) if you get a number bigger than 1.
 
 while (x <- rnorm(1) ) 
 { x <- rnorm(1)
