@@ -1,7 +1,9 @@
 ---
 title: "End of Chapter - Data Exercises - 200692"
 date: "Dec 24, 2020"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 # Chapter 7.3
