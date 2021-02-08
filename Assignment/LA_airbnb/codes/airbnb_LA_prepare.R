@@ -61,16 +61,16 @@ data <- read_csv(paste(data_in,"airbnb_LA_cleaned.csv", sep = ""))
 table(data$property_type)  # a glimpse of this column (check the sorts and size of each type)
 
 
-# # rename Townhouse to House
-# data <- data %>%
-#   mutate( # if "==", then change name, or else keep it original
-#     property_type = ifelse(data$property_type == "Townhouse", "House", data$property_type)) # why create a duplicate variable
-# 
-# data <- data %>% # '%in%' means any of 
-#   filter(property_type %in% c("Apartment", "House", "Townhouse"))
-# 
-# data <- data %>%
-#   mutate( f_property_type = factor(property_type)) # why create a duplicate variable
+# rename Townhouse to House
+data <- data %>%
+  mutate( # if "==", then change name, or else keep it original
+    property_type = ifelse(data$property_type == "Townhouse", "House", data$property_type)) # why create a duplicate variable
+
+data <- data %>% # '%in%' means any of
+  filter(property_type %in% c("Apartment", "House", "Townhouse"))
+
+data <- data %>%
+  mutate( f_property_type = factor(property_type)) # why create a duplicate variable
 
 
 #Room type as factor

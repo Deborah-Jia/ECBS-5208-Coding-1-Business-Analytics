@@ -30,22 +30,23 @@ library(margins)
 library(pscl)
 library(modelsummary)
 library(stargazer)
-
+library(beepr)
 
 ##
 # Loading the data
-<<<<<<< HEAD
+# <<<<<<< HEAD
 w_dir <- "/Users/wodediannao/Desktop/ECBS-5208-Coding-1-Business-Analytics/Class_10/"
-=======
-w_dir <- "/Users/agostonreguly/Documents/Egyetem/CEU/Teaching_2020/Coding_with_R/git_coding_1/ECBS-5208-Coding-1-Business-Analytics/Class_10/"
+# =======
+# w_dir <- "/Users/agostonreguly/Documents/Egyetem/CEU/Teaching_2020/Coding_with_R/git_coding_1/ECBS-5208-Coding-1-Business-Analytics/Class_10/"
 
->>>>>>> 6bfbd4452a5cc86dabdd71dbde14a311de087424
+# >>>>>>> 6bfbd4452a5cc86dabdd71dbde14a311de087424
 
 ######
 # 1. PART - Create workfile
 
 # load in clean and tidy data and create workfile
 share <- read.csv(paste0(w_dir,"data/clean/share-health.csv"),stringsAsFactors = F)
+
 
 # Creating binary variable for health: takes 1 if sphus is 1 or 2, otherwise 0.
 share$healthy <- ifelse( share$sphus>0 & share$sphus<=5, 
@@ -122,10 +123,10 @@ share$eduyears_mod <- NULL
 # Remove if any of a newly created variable is missing
 share <- share[!is.na(share$bmi) & !is.na(share$eduyears) & !is.na(share$exerc), ]
 
-# Call a function from a file:
+# Call a function from a file: it will run the codes for you
 source(paste0(w_dir,'/codes/sum_stat.R'))
 
-# Make descriptive statistics for selected variables
+# Make descriptive statistics for selected variables: 早知如此，就该在作业中source它，这么好用！
 desc_stat <- sum_stat( share , var_names = c('stayshealthy','smoking','ever_smoked','female',
                                              'age','income10','eduyears','bmi','exerc'),
                        stats = c('mean','median','min','max','sd') )
@@ -137,22 +138,15 @@ desc_stat <- sum_stat( share , var_names = c('stayshealthy','smoking','ever_smok
 #     where country_str stands for country strings
 
 # Import
-<<<<<<< HEAD
+# <<<<<<< HEAD
 country_id <- read_csv(paste0(w_dir,"data/clean/country_id.csv"))
 # join to share to country_id by country
 share <- left_join(share, country_id, by= "country")
 
 # Check the number of people stayed healthy by countries
 table(share$country_str,share$stayshealthy)
-=======
-country_id <- read.csv(paste0(w_dir,"data/clean/country_id.csv"))
-# left join to share by country
-share <- left_join( share , country_id, by = "country" )
 
-# Check the number of people stayed healthy by countries
-table(share$country_str,share$stayshealthy)
-
->>>>>>> 6bfbd4452a5cc86dabdd71dbde14a311de087424
+# >>>>>>> 6bfbd4452a5cc86dabdd71dbde14a311de087424
 # Remove non-needed variables
 rm( desc_stat , country_id )
 
@@ -170,20 +164,18 @@ write.csv( share, paste0( w_dir , "data/clean/share-health-filtered.csv"), row.n
 # Linear probability models of good health at endline and smoking
 
 # 1st model:current smoker on RHS
-<<<<<<< HEAD
+# <<<<<<< HEAD
 lpm1 <- lm(stayshealthy ~ smoking, data = share )
-=======
-lpm1 <- lm( stayshealthy ~ smoking , data = share )
->>>>>>> 6bfbd4452a5cc86dabdd71dbde14a311de087424
+
 # Alternative for lm_robust you can use this summary for lm() object
 summary( lpm1, vcov=sandwich )
 
 # Get the predicted values
-<<<<<<< HEAD
-share$pred1 <- predict(lpm1)
-=======
-share$pred1 <- predict( lpm1 )
->>>>>>> 6bfbd4452a5cc86dabdd71dbde14a311de087424
+# <<<<<<< HEAD
+share$pred1 <- predict(lpm1) # 这就是之前怎么也学不会、找不到的perdict，还代数！
+# =======
+# share$pred1 <- predict( lpm1 )
+# >>>>>>> 6bfbd4452a5cc86dabdd71dbde14a311de087424
 
 # Compare smoking with predicted values and real outcomes
 table(share$pred1, share$smoking)
@@ -197,7 +189,7 @@ share<-share %>%
 
 # Show graph with actual and predicted probabilities
 ggplot(data = share, label=smoking) +
-  geom_point( aes(x = smoking, y = pred1), size = 2, color="red", shape = 16) +
+  geom_point( aes(x = smoking, y = pred1), size = 6, color="red", shape = 4) +
   geom_line(  aes(x = smoking, y = pred1), colour="red",  size = 0.7) +
   geom_point( aes(x = smoking, y = stayshealthy, size=weight_2), fill = "blue", color="blue",
               shape = 16, alpha=0.8, show.legend=F, na.rm=TRUE)  +
@@ -209,13 +201,13 @@ ggplot(data = share, label=smoking) +
 
 ##
 # 2nd model: current smoker and ever smoked on RHS
-<<<<<<< HEAD
-lpm2 <- lm(stayshealthy ~ smoking + ever_smoked, data = share )
-summary(lpm2, vcov = sandwich() )
-=======
+# <<<<<<< HEAD
+# lpm2 <- lm(stayshealthy ~ smoking + ever_smoked, data = share )
+# summary(lpm2, vcov = sandwich() )
+# =======
 lpm2 <- lm( stayshealthy ~ smoking + ever_smoked , data = share )
 summary( lpm2 , vcov = sandwich )
->>>>>>> 6bfbd4452a5cc86dabdd71dbde14a311de087424
+# >>>>>>> 6bfbd4452a5cc86dabdd71dbde14a311de087424
 
 # Compare models w stargazer
 stargazer( list(lpm1, lpm2), digits=3, out=paste(w_dir,"out/saturated_lmp.html",sep=""))
@@ -226,7 +218,7 @@ rm(lpm1)
 ####
 # 3. PART - LINEAR PROBABILITY MODELS & PREDICTION
 #
-# Using more RHS variables!
+# Using more RHS variables! right-hand-side 
 #   first check some functional forms
 
 # For pretty plots create weighs for education
@@ -283,20 +275,20 @@ lpm3 <-lm(stayshealthy ~ smoking + ever_smoked + female +
             lspline(bmi,c(18.5,25)) + exerc + as.factor(country), 
           data = share)
 summary(lpm3, vcov = sandwich() )
-=======
-lpm3 <-lm( stayshealthy ~ smoking + ever_smoked + female +
-           age + lspline(eduyears,c(8,18)) + income10 + lspline(bmi,c(18.5,25,35)) +
-             exerc + as.factor(country),
-           data = share )
-summary( lpm3 , vcov=sandwich )
->>>>>>> 6bfbd4452a5cc86dabdd71dbde14a311de087424
+# =======
+# lpm3 <-lm( stayshealthy ~ smoking + ever_smoked + female +
+#            age + lspline(eduyears,c(8,18)) + income10 + lspline(bmi,c(18.5,25,35)) +
+#              exerc + as.factor(country),
+#            data = share )
+# summary( lpm3 , vcov=sandwich )
+# >>>>>>> 6bfbd4452a5cc86dabdd71dbde14a311de087424
 
 # Save the model output
 stargazer(lpm3, digits=3, out=paste(w_dir,"out/lpm_rich.html",sep=""))
 
 # Check predicted probabilities: is there any interesting values?
 # predicted probabilities
-<<<<<<< HEAD
+# <<<<<<< HEAD
 share$pred_lpm <- predict(lpm3)
 # Make a descriptive summary of the predictions!
 summary(share$pred_lpm)
@@ -305,7 +297,7 @@ summary(share$pred_lpm)
 ggplot(share, aes(x= pred_lpm)) +
   geom_histogram(fill = "navyblue", color = 'grey90')
   
-=======
+# =======
 share$pred_lpm <- predict( lpm3 )
 # Make a descriptive summary of the predictions!
 summary( share$pred_lpm )
@@ -313,7 +305,7 @@ summary( share$pred_lpm )
 # Show the predicted probabilities' distribution (ggplot)
 ggplot( share , aes( x = pred_lpm ) ) +
   geom_histogram( fill = 'navyblue' , color = 'grey90')
->>>>>>> 6bfbd4452a5cc86dabdd71dbde14a311de087424
+# >>>>>>> 6bfbd4452a5cc86dabdd71dbde14a311de087424
   
 # We are interested in the top 1% and bottom 1% characteristics!
 #   Is there any significant difference?
@@ -327,7 +319,7 @@ share <- share %>%
 #   and variables c('smoking','ever_smoked','female','age','eduyears','income10','bmi','exerc')
 #   use the num_obs = F input for sum_stat
 
-<<<<<<< HEAD
+# <<<<<<< HEAD
 # Top 1%  #the number is different
 t1 <- sum_stat(subset( share, q100_pred_lpm == 100),
                        c('smoking','ever_smoked','female','age','eduyears','income10','bmi','exerc'),
@@ -340,23 +332,24 @@ b1 <- sum_stat(subset( share, q100_pred_lpm == 1),
                c('smoking','ever_smoked','female','age','eduyears','income10','bmi','exerc'),
                c('mean','median','sd'),
                num_obs = F)
-=======
-# Top 1%
-t1 <- sum_stat( subset( share , q100_pred_lpm==100 ) , 
-                c('smoking','ever_smoked','female','age','eduyears','income10','bmi','exerc'),
-                c('mean','median','sd'),
-                num_obs = F )
-t1
-
-# Bottom 1%
-b1 <- sum_stat( subset( share , q100_pred_lpm==1 ) , 
-                c('smoking','ever_smoked','female','age','eduyears','income10','bmi','exerc'),
-                c('mean','median','sd'),
-                num_obs = F )
 b1
->>>>>>> 6bfbd4452a5cc86dabdd71dbde14a311de087424
-
-b1
+# # =======
+# # Top 1%
+# t1 <- sum_stat( subset( share , q100_pred_lpm==100 ) , 
+#                 c('smoking','ever_smoked','female','age','eduyears','income10','bmi','exerc'),
+#                 c('mean','median','sd'),
+#                 num_obs = F )
+# t1
+# 
+# # Bottom 1%
+# b1 <- sum_stat( subset( share , q100_pred_lpm==1 ) , 
+#                 c('smoking','ever_smoked','female','age','eduyears','income10','bmi','exerc'),
+#                 c('mean','median','sd'),
+#                 num_obs = F )
+# b1
+# >>>>>>> 6bfbd4452a5cc86dabdd71dbde14a311de087424
+# 
+# b1
 # You may change the variable names to remove...
 rm(lpm3,t1,b1,stat_interest,var_interest)
 

@@ -16,13 +16,13 @@ library(tidyverse)
 # Go back to indexing
 df[2,2]
 # Create values/vectors
-df[[1]]
+df[[1]] # 所以你就只得到里面的值了
 df[1]
 # Good news: df$var_name == df[[var_column]]
 df$id
 # Lets find age of 3rd observation or id==3
 df$age[3]
-df$age[df$id==3]
+df$age[df$id==3] #原来可以嵌套选择！
 # Indexing with logicals
 df$age
 df$id==3

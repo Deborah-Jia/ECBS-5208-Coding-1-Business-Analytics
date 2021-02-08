@@ -14,22 +14,25 @@ library(tidyverse)
 #     and we have removed hotels which has price larger than 600$ (see Bekes-Kezdi (2020, Ch3))
 
 # Load data directly from web
-my_url <- "https://raw.githubusercontent.com/CEU-Economics-and-Business/ECBS-5208-Coding-1-Business-Analytics/master/Class_4n5/data/clean_hotels/hotels-vienna-london.csv"
+my_url <- "https://raw.githubusercontent.com/Deborah-Jia/ECBS-5208-Coding-1-Business-Analytics/master/Class_4%265/data/clean_hotels/hotels-vienna-london.csv"
 heu <- read_csv( my_url )
 
 ###############
 # Quick check on all HISTOGRAMS
 heu %>%
-  keep(is.numeric) %>% 
-  gather() %>% 
+  keep(is.numeric) %>% # 只保留符合括号内条件的目标
+  gather() %>% # 非常好用！直接看频率分布直方图了
   ggplot(aes(value)) +
   facet_wrap(~key, scales = "free") +
   geom_histogram()
 
 # Alternatively, there is a package for the same command:
-# install.packages('pairsD3')
-# library(pairsD3)
-# pairsD3(heu,big=TRUE)
+# 等有空再参考
+install.packages('pairsD3')
+library(pairsD3)
+pairsD3(heu,big=TRUE)
+data(iris)
+pairsD3(iris[,1:4],group=iris[,5], labels=gsub(pattern = "\\.",replacement = " ", names(iris)))
 
 # Quick check on all variable's summary statistics:
 # Gives a quick summary stat
@@ -38,7 +41,7 @@ summary(heu)
 
 # Check the most important variables: 
 # 1) price
-f1 <- ggplot( heu , aes( x = price , fill = city ) ) +
+f1 <- ggplot( heu , aes( x = price , fill = city ) ) + #直接用城市区分开了
   geom_histogram( aes(y = ..density..) , alpha = 0.5, binwidth = 20) +
   geom_density( aes(y = ..density..) , alpha = 0.5 , bw = 20) +
   labs(x='Hotel Prices in London and Vienna',y='Density',fill='Cities')
@@ -265,9 +268,3 @@ ggplot(data = heu_rs , aes(x = distance , y = price ,
     discrete = TRUE, name = "City", option = "viridis") + 
   labs(x = "Distance (miles)", y = "Price ($)") + 
   theme_classic()
-
-
-
-
-
-

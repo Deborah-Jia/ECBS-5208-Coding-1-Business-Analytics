@@ -1,0 +1,552 @@
+"","variable","ols_coefficient","lasso_coefficient"
+"1","(Intercept)",76.4270709857668,122.646423135464
+"2","d_airconditioning",5.08403686948582,1.47770421822
+"3","d_babybath",-13.9827559911858,-0.449656396182998
+"4","d_babymonitor",0.440316662482868,NA
+"5","d_babysitterrecommendations",16.2419847039007,1.13111389350941
+"6","d_bakingsheet",3.06290397843667,0.000904778150088893
+"7","d_barbecue_tool",6.17168789446505,1.92035697275047
+"8","d_bathroomessentials",25.6850954274514,2.85491433180966
+"9","d_beachessentials",7.6999393285636,1.25573552496779
+"10","d_beachfront",13.6064385284129,1.70425696185215
+"11","d_bedlinens",-5.60448441766134,-1.92089177871771
+"12","d_bedroomcomforts",NA,8.53944675695369e-14
+"13","d_bidet",-6.30052974602492,NA
+"14","d_boardgames",-39.2303219049836,-0.439937319640414
+"15","d_bodysoap",0.293552171711752,NA
+"16","d_bread_maker",-7.88765907963909,-0.287447790842646
+"17","d_breakfast",-0.75425670567603,NA
+"18","d_buildingstaff",-1.67123717755817,NA
+"19","d_ceilingfan",0.496682042170797,NA
+"20","d_changingtable",14.2300428587088,0.283699501189495
+"21","d_cleaningproducts",-5.50103409196868,NA
+"22","d_clothingstorage",4.34179730442305,NA
+"23","d_coffee_maker",6.72881493643164,2.43169360485153
+"24","d_conditioner_agg",-1.86154193699787,NA
+"25","d_cookingbasics",-4.18204444811838,-1.46592317893598
+"26","d_crib",5.32468946228346,0.641454010841764
+"27","d_dedicatedworkspace",1.43671770275748,0.454394073791994
+"28","d_diningtable",-7.41195356309044,NA
+"29","d_dishwasher",11.5263110868455,4.56762903147406
+"30","d_dryer",-6.55388021602942,NA
+"31","d_elevator",7.74519061091573,3.433855798681
+"32","d_essentials",0.276247985431873,NA
+"33","d_ethernetconnection",0.428851239945718,NA
+"34","d_evcharger",13.0825261215716,1.71310369509517
+"35","d_fireextinguisher",-0.368323893195901,NA
+"36","d_firepit",28.3234433330581,0.084083511045013
+"37","d_fireplaceguards",1.05184027851766,NA
+"38","d_freezer",-4.51849770466873,-0.860098127744111
+"39","d_gameconsole",13.1574853061203,1.00038736089236
+"40","d_gym",13.3574436921446,5.74281113075224
+"41","d_hairdryer",3.04967595006093,1.16553000147182
+"42","d_hangers",-2.15173052801453,-0.445986516245174
+"43","d_has_availability",-1.51190414641296,NA
+"44","d_heating_agg",-2.2882042847452,NA
+"45","d_highchair",12.5426350250594,2.47189313908437
+"46","d_host_has_profile_pic",-22.199926448774,-0.533803056932631
+"47","d_host_identity_verified",3.1395104524883,1.02958200515881
+"48","d_host_is_superhost",1.87264590167042,0.497637040294449
+"49","d_hotwater",3.72249216843087,1.22778453968041
+"50","d_indoorfireplace",9.51308028065254,3.15325113399744
+"51","d_instant_bookable",-3.31472085986588,-1.58123874348686
+"52","d_iron",0.579399487458618,NA
+"53","d_keypad",-4.24929220281128,-0.792574405235355
+"54","d_kitchen_agg",6.25324828318765,1.07280378784931
+"55","d_lakeaccess",30.8556367697254,1.58760463954049
+"56","d_laundromatnearby",6.68692678662184,0.481992480612835
+"57","d_lockbox",-3.3645677756968,-0.663754006604705
+"58","d_microwave",-4.80549054662252,-1.45000718764021
+"59","d_minifridge",5.6942046101443,NA
+"60","d_mosquitonet",-14.604885543131,NA
+"61","d_outdoorfurniture",-18.6960509205982,-0.161306045988432
+"62","d_outdoorshower",-14.3956102343988,NA
+"63","d_outletcovers",-9.46752910088522,-0.718458755880848
+"64","d_oven_agg",-1.83293036295794,NA
+"65","d_petsallowed",1.22086323883273,NA
+"66","d_piano",-19.9080070797765,-0.537291225599819
+"67","d_pool",3.75596315299994,1.31507432516797
+"68","d_pooltoys",35.9798591502843,0.253427056438223
+"69","d_portablefans",-3.34678311168029,-0.0902726919215633
+"70","d_portableheater",-13.8546471763388,-0.0167883764123216
+"71","d_privateentrance",4.21833213099732,1.95762891455849
+"72","d_recordplayer",-41.2008477927368,-1.25310702409852
+"73","d_refrigerator_agg",3.5875697595058,NA
+"74","d_ricemaker",-7.74924823798367,-0.256792609820397
+"75","d_safe",7.29837629656205,NA
+"76","d_shampoo_agg",4.98406773571473,1.64196575096651
+"77","d_showergel",0.49990671692524,NA
+"78","d_smartlock",-0.0102237406462026,NA
+"79","d_smokealarm",-0.81084433577783,NA
+"80","d_smokingallowed",-27.6651405511201,-0.413929319826361
+"81","d_soundsystem",35.0094929442028,1.88477582082307
+"82","d_stove_agg",-5.20342876364695,-1.68119205901892
+"83","d_trashcompactor",1.66281862812584,NA
+"84","d_tub_agg",-4.14708582351043,-1.08986447296785
+"85","d_tv_agg",5.6570640693928,1.64588056452617
+"86","d_washer",11.6407196387649,1.79034546493176
+"87","d_waterfront",4.71755010924939,NA
+"88","d_wifi_agg",-4.99122298554854,NA
+"89","d_windowguards",-3.60152007486639,-0.139939457825802
+"90","d_wineglasses",16.4814492002991,NA
+"91","f_neighbourhood_cleansedAgoura Hills",-57.4237698318378,NA
+"92","f_neighbourhood_cleansedAlhambra",-30.3469540034045,NA
+"93","f_neighbourhood_cleansedAlondra Park",73.8725817136605,0.894079438233263
+"94","f_neighbourhood_cleansedAltadena",-6.60499401420129,0.37958503399686
+"95","f_neighbourhood_cleansedArcadia",-29.5094409410025,NA
+"96","f_neighbourhood_cleansedArlington Heights",-46.516983162981,-0.36266323431232
+"97","f_neighbourhood_cleansedAtwater Village",-37.8234218139879,NA
+"98","f_neighbourhood_cleansedAvalon",115.149799972437,2.32138326919736
+"99","f_neighbourhood_cleansedAzusa",-29.4764678545217,NA
+"100","f_neighbourhood_cleansedBaldwin Hills/Crenshaw",-42.9763103469879,-0.021618176888789
+"101","f_neighbourhood_cleansedBaldwin Park",-19.6700147366378,NA
+"102","f_neighbourhood_cleansedBel-Air",-81.5463044145556,-0.57421533738669
+"103","f_neighbourhood_cleansedBell",-59.433357267751,-0.110069475869712
+"104","f_neighbourhood_cleansedBell Gardens",24.9090389579516,0.364481634264342
+"105","f_neighbourhood_cleansedBellflower",-39.2553662649639,-0.0394875654550529
+"106","f_neighbourhood_cleansedBeverly Crest",33.311212008259,0.812274134813806
+"107","f_neighbourhood_cleansedBeverly Grove",4.20129088723068,0.890794371077726
+"108","f_neighbourhood_cleansedBeverly Hills",10.3359064936716,3.90648491024617
+"109","f_neighbourhood_cleansedBeverlywood",-57.7024294355408,NA
+"110","f_neighbourhood_cleansedBoyle Heights",-35.490206834222,NA
+"111","f_neighbourhood_cleansedBrentwood",-28.0077681275311,NA
+"112","f_neighbourhood_cleansedBroadway-Manchester",NA,NA
+"113","f_neighbourhood_cleansedBurbank",-29.4606047549487,NA
+"114","f_neighbourhood_cleansedCalabasas",-48.9397109649711,NA
+"115","f_neighbourhood_cleansedCanoga Park",-50.8618412652389,NA
+"116","f_neighbourhood_cleansedCarson",-9.30672940410687,0.208151363291925
+"117","f_neighbourhood_cleansedCarthay",-12.6899613038272,0.973333277634293
+"118","f_neighbourhood_cleansedCentral-Alameda",NA,NA
+"119","f_neighbourhood_cleansedCentury City",-14.9198784107295,NA
+"120","f_neighbourhood_cleansedChatsworth",-13.1441126399139,NA
+"121","f_neighbourhood_cleansedCheviot Hills",-12.0987628707684,0.158050009328772
+"122","f_neighbourhood_cleansedChinatown",-33.2669306184382,NA
+"123","f_neighbourhood_cleansedClaremont",-30.8447192688513,NA
+"124","f_neighbourhood_cleansedCovina",NA,NA
+"125","f_neighbourhood_cleansedCulver City",-20.298779770312,0.68394537967345
+"126","f_neighbourhood_cleansedCypress Park",NA,NA
+"127","f_neighbourhood_cleansedDel Aire",-5.22239576041612,0.417216108274432
+"128","f_neighbourhood_cleansedDel Rey",-15.5405135302181,NA
+"129","f_neighbourhood_cleansedDiamond Bar",-49.2209537567747,NA
+"130","f_neighbourhood_cleansedDowney",-41.6673665089778,NA
+"131","f_neighbourhood_cleansedDowntown",-13.1449360705699,NA
+"132","f_neighbourhood_cleansedEagle Rock",-33.7642243455821,NA
+"133","f_neighbourhood_cleansedEast Hollywood",-41.9603055831397,NA
+"134","f_neighbourhood_cleansedEast Los Angeles",-46.8812254142979,NA
+"135","f_neighbourhood_cleansedEast San Gabriel",-39.3043385945211,NA
+"136","f_neighbourhood_cleansedEcho Park",-28.690764926902,NA
+"137","f_neighbourhood_cleansedEl Monte",-47.4531003573717,NA
+"138","f_neighbourhood_cleansedEl Segundo",-25.6610238664334,NA
+"139","f_neighbourhood_cleansedEl Sereno",NA,NA
+"140","f_neighbourhood_cleansedElysian Park",-49.2276615945635,NA
+"141","f_neighbourhood_cleansedElysian Valley",NA,NA
+"142","f_neighbourhood_cleansedEncino",-67.9256536466346,-0.876500597581752
+"143","f_neighbourhood_cleansedExposition Park",-52.3589173044257,-0.79312625242911
+"144","f_neighbourhood_cleansedFairfax",-14.5360638806196,NA
+"145","f_neighbourhood_cleansedFlorence",-89.5362657878318,-0.48422160162252
+"146","f_neighbourhood_cleansedGardena",-39.0370260837583,NA
+"147","f_neighbourhood_cleansedGlassell Park",-31.254022649874,NA
+"148","f_neighbourhood_cleansedGlendale",-18.2307858712831,0.327969637906991
+"149","f_neighbourhood_cleansedGlendora",-15.0964831988589,NA
+"150","f_neighbourhood_cleansedGranada Hills",NA,NA
+"151","f_neighbourhood_cleansedGreen Meadows",NA,NA
+"152","f_neighbourhood_cleansedGriffith Park",-40.3902407299283,NA
+"153","f_neighbourhood_cleansedHacienda Heights",-56.591204999209,-0.421546468367116
+"154","f_neighbourhood_cleansedHancock Park",-25.0939426169705,0.0149150665898617
+"155","f_neighbourhood_cleansedHarbor City",-18.898800070274,NA
+"156","f_neighbourhood_cleansedHarbor Gateway",29.9271563323345,NA
+"157","f_neighbourhood_cleansedHarvard Heights",-38.6403840797938,NA
+"158","f_neighbourhood_cleansedHarvard Park",-43.0366382027028,-0.00721615900313995
+"159","f_neighbourhood_cleansedHawthorne",-25.0276011366697,NA
+"160","f_neighbourhood_cleansedHermosa Beach",32.5779698021048,5.00825283620576
+"161","f_neighbourhood_cleansedHighland Park",-59.6141664456878,-0.0222031756717194
+"162","f_neighbourhood_cleansedHistoric South-Central",-61.0740210628859,-0.821630858398399
+"163","f_neighbourhood_cleansedHollywood",-34.9005567419599,-1.36686912464306
+"164","f_neighbourhood_cleansedHollywood Hills",-32.0743477871034,NA
+"165","f_neighbourhood_cleansedHollywood Hills West",-8.52244541943017,1.53249409561847
+"166","f_neighbourhood_cleansedHuntington Park",9.66789327069663,0.23252044769785
+"167","f_neighbourhood_cleansedHyde Park",-31.0069052310754,NA
+"168","f_neighbourhood_cleansedIndustry",-70.9660411647879,NA
+"169","f_neighbourhood_cleansedInglewood",-23.573620250032,0.134976849240083
+"170","f_neighbourhood_cleansedJefferson Park",-27.8424707739605,NA
+"171","f_neighbourhood_cleansedKoreatown",-31.7990121057083,-0.0900525210315303
+"172","f_neighbourhood_cleansedLa Crescenta-Montrose",-39.6698233115222,-0.113742707583161
+"173","f_neighbourhood_cleansedLa Habra Heights",NA,NA
+"174","f_neighbourhood_cleansedLa Mirada",-25.027482547274,NA
+"175","f_neighbourhood_cleansedLa Puente",-48.9761339080727,-0.0473397591137093
+"176","f_neighbourhood_cleansedLadera Heights",-14.001391381042,0.0338835406040429
+"177","f_neighbourhood_cleansedLake Balboa",-95.1510265634168,-0.829934921469318
+"178","f_neighbourhood_cleansedLakewood",NA,NA
+"179","f_neighbourhood_cleansedLancaster",-94.1383343978524,-0.512503486635557
+"180","f_neighbourhood_cleansedLarchmont",-33.0538620177354,NA
+"181","f_neighbourhood_cleansedLawndale",-66.6074279694755,-0.807836012118174
+"182","f_neighbourhood_cleansedLeimert Park",-50.0123297886875,-0.32349145707369
+"183","f_neighbourhood_cleansedLennox",NA,NA
+"184","f_neighbourhood_cleansedLincoln Heights",-13.5566352951912,NA
+"185","f_neighbourhood_cleansedLomita",-52.0235881169817,NA
+"186","f_neighbourhood_cleansedLong Beach",-33.7829518387617,NA
+"187","f_neighbourhood_cleansedLos Feliz",-40.2761220998342,NA
+"188","f_neighbourhood_cleansedLynwood",-54.7882099901058,NA
+"189","f_neighbourhood_cleansedMalibu",119.275927561488,6.74452655361565
+"190","f_neighbourhood_cleansedManchester Square",-16.5508893068605,NA
+"191","f_neighbourhood_cleansedManhattan Beach",19.2810154654387,1.29375177966182
+"192","f_neighbourhood_cleansedMar Vista",-42.1361413699754,NA
+"193","f_neighbourhood_cleansedMarina del Rey",-5.48416219242857,3.39394799139412
+"194","f_neighbourhood_cleansedMaywood",-72.4895633086061,-0.224821599484304
+"195","f_neighbourhood_cleansedMid-City",-43.6875768395903,-1.32001502685994
+"196","f_neighbourhood_cleansedMid-Wilshire",-18.9948375568998,0.923870316756804
+"197","f_neighbourhood_cleansedMonrovia",-49.392758564535,NA
+"198","f_neighbourhood_cleansedMontebello",-52.2930099437358,-0.242659378848725
+"199","f_neighbourhood_cleansedMontecito Heights",-37.3966774834683,NA
+"200","f_neighbourhood_cleansedMonterey Park",-10.8995304137398,0.716300187165803
+"201","f_neighbourhood_cleansedMount Washington",-13.6277227904757,NA
+"202","f_neighbourhood_cleansedNorth Hollywood",-37.2957154959511,NA
+"203","f_neighbourhood_cleansedNorthridge",-43.7358073037742,NA
+"204","f_neighbourhood_cleansedNorwalk",-50.8907657456344,NA
+"205","f_neighbourhood_cleansedPacific Palisades",8.87397853304779,0.829798590818527
+"206","f_neighbourhood_cleansedPalmdale",-52.5021637596452,NA
+"207","f_neighbourhood_cleansedPalms",-38.3721040892263,NA
+"208","f_neighbourhood_cleansedPalos Verdes Estates",28.1392998966391,0.488576903401138
+"209","f_neighbourhood_cleansedPanorama City",-70.6495107902404,-0.445089279545284
+"210","f_neighbourhood_cleansedParamount",-59.3979148542701,-0.170315273789155
+"211","f_neighbourhood_cleansedPasadena",-13.2683904850694,0.882587759029204
+"212","f_neighbourhood_cleansedPico Rivera",NA,NA
+"213","f_neighbourhood_cleansedPico-Robertson",-20.6580815383693,NA
+"214","f_neighbourhood_cleansedPico-Union",-21.8374446859449,0.0977227533090827
+"215","f_neighbourhood_cleansedPlaya del Rey",-4.2649792324779,NA
+"216","f_neighbourhood_cleansedPlaya Vista",-10.4637370450938,0.729151818156819
+"217","f_neighbourhood_cleansedPomona",-0.684350672997737,NA
+"218","f_neighbourhood_cleansedQuartz Hill",-56.5469103672174,-0.129120509383033
+"219","f_neighbourhood_cleansedRancho Palos Verdes",40.7485195194134,-0.0791802769314644
+"220","f_neighbourhood_cleansedRancho Park",6.92857603502879,NA
+"221","f_neighbourhood_cleansedRedondo Beach",-15.3142162953037,1.02529238659571
+"222","f_neighbourhood_cleansedReseda",-67.0984979755709,-0.738470905747373
+"223","f_neighbourhood_cleansedRolling Hills Estates",NA,NA
+"224","f_neighbourhood_cleansedRosemead",-32.3768336316226,NA
+"225","f_neighbourhood_cleansedRowland Heights",-72.8180092114,-0.962623585843358
+"226","f_neighbourhood_cleansedSan Fernando",-109.551349687819,-0.673622559775265
+"227","f_neighbourhood_cleansedSan Gabriel",-35.9575490194504,NA
+"228","f_neighbourhood_cleansedSan Pasqual",-36.7380582142221,NA
+"229","f_neighbourhood_cleansedSan Pedro",-24.9117443974568,NA
+"230","f_neighbourhood_cleansedSanta Clarita",-33.9612674265607,NA
+"231","f_neighbourhood_cleansedSanta Monica",-2.38703756554798,NA
+"232","f_neighbourhood_cleansedSawtelle",-26.9865029361348,NA
+"233","f_neighbourhood_cleansedShadow Hills",-17.968662873449,NA
+"234","f_neighbourhood_cleansedSherman Oaks",-35.8158189143893,-0.0738626938329563
+"235","f_neighbourhood_cleansedSierra Madre",-28.7279535245105,NA
+"236","f_neighbourhood_cleansedSignal Hill",-10.3719691905945,NA
+"237","f_neighbourhood_cleansedSilver Lake",-19.444302973121,0.622370993559047
+"238","f_neighbourhood_cleansedSouth Gate",-0.185973176623719,0.927610544607162
+"239","f_neighbourhood_cleansedSouth Park",-98.5758899715611,-0.496513670272607
+"240","f_neighbourhood_cleansedSouth Pasadena",-39.6805110079088,NA
+"241","f_neighbourhood_cleansedStudio City",-24.8234555037883,0.3067461423023
+"242","f_neighbourhood_cleansedSun Valley",-58.8225955495896,NA
+"243","f_neighbourhood_cleansedSunland",-60.1973183925204,-0.0165935561306306
+"244","f_neighbourhood_cleansedSylmar",-42.9997648501439,NA
+"245","f_neighbourhood_cleansedTarzana",-49.5358070046265,-0.186480475876256
+"246","f_neighbourhood_cleansedTemple City",25.6421495680594,NA
+"247","f_neighbourhood_cleansedToluca Lake",-42.5485816134341,NA
+"248","f_neighbourhood_cleansedTopanga",43.3328811736736,NA
+"249","f_neighbourhood_cleansedTorrance",-1.88322235868978,NA
+"250","f_neighbourhood_cleansedUnincorporated Santa Monica Mountains",19.7178639716871,0.541130751728979
+"251","f_neighbourhood_cleansedUnincorporated Santa Susana Mountains",-55.120626517503,-0.029887806931011
+"252","f_neighbourhood_cleansedUniversal City",-60.3181758121527,NA
+"253","f_neighbourhood_cleansedUniversity Park",-40.6848958416782,-0.329926500228347
+"254","f_neighbourhood_cleansedValley Glen",-47.2940516271464,NA
+"255","f_neighbourhood_cleansedValley Village",-29.8279891947531,NA
+"256","f_neighbourhood_cleansedVan Nuys",-34.7381645393064,NA
+"257","f_neighbourhood_cleansedVenice",3.99223353322166,4.89847329175452
+"258","f_neighbourhood_cleansedVermont Knolls",-54.5691612519941,NA
+"259","f_neighbourhood_cleansedVermont Square",-36.6348556004168,NA
+"260","f_neighbourhood_cleansedVernon",1.59300401476983,-0.000396909591196487
+"261","f_neighbourhood_cleansedVeterans Administration",-30.0691387653751,NA
+"262","f_neighbourhood_cleansedView Park-Windsor Hills",-49.1118409030525,-0.484931223540222
+"263","f_neighbourhood_cleansedVincent",-93.3590929071617,-0.44247752177564
+"264","f_neighbourhood_cleansedWatts",-8.27686994815563,NA
+"265","f_neighbourhood_cleansedWest Adams",-16.9747197305289,NA
+"266","f_neighbourhood_cleansedWest Covina",-32.4788918685984,NA
+"267","f_neighbourhood_cleansedWest Hills",-23.1231387139296,NA
+"268","f_neighbourhood_cleansedWest Hollywood",-5.55333213032999,1.30153446012449
+"269","f_neighbourhood_cleansedWest Los Angeles",-45.6152955597455,-1.04159714064279
+"270","f_neighbourhood_cleansedWestchester",-39.4608743762797,NA
+"271","f_neighbourhood_cleansedWestlake",-39.402795325502,-1.20106598215105
+"272","f_neighbourhood_cleansedWestmont",-45.1057640692906,NA
+"273","f_neighbourhood_cleansedWestwood",-23.620686293046,NA
+"274","f_neighbourhood_cleansedWhittier",-28.1732598460917,NA
+"275","f_neighbourhood_cleansedWilmington",NA,NA
+"276","f_neighbourhood_cleansedWindsor Square",-32.4376440747455,NA
+"277","f_neighbourhood_cleansedWinnetka",NA,NA
+"278","f_neighbourhood_cleansedWoodland Hills",-37.3813482156297,NA
+"279","f_number_of_reviews",0.0106830022995261,NA
+"280","f_property_typeRoom_apt",-52.4347423011225,-5.67031611710246
+"281","f_property_typeRoom_apt:d_bread_maker",NA,-0.169250569948995
+"282","f_property_typeRoom_apt:d_wifi_agg",NA,-3.42705439922738
+"283","f_property_typeRoom_apt:f_neighbourhood_cleansedAlhambra",NA,0.203843066327171
+"284","f_property_typeRoom_apt:f_neighbourhood_cleansedArcadia",NA,-0.262208141809981
+"285","f_property_typeRoom_apt:f_neighbourhood_cleansedAzusa",NA,0.685192648308242
+"286","f_property_typeRoom_apt:f_neighbourhood_cleansedBaldwin Park",NA,0.253548049796006
+"287","f_property_typeRoom_apt:f_neighbourhood_cleansedBell",NA,-4.60460927635506e-06
+"288","f_property_typeRoom_apt:f_neighbourhood_cleansedBeverly Hills",NA,-0.420062525315682
+"289","f_property_typeRoom_apt:f_neighbourhood_cleansedBoyle Heights",NA,0.468438035549525
+"290","f_property_typeRoom_apt:f_neighbourhood_cleansedBrentwood",NA,-0.816658116421021
+"291","f_property_typeRoom_apt:f_neighbourhood_cleansedBurbank",NA,0.0463947036889615
+"292","f_property_typeRoom_apt:f_neighbourhood_cleansedCanoga Park",NA,-0.180086074427739
+"293","f_property_typeRoom_apt:f_neighbourhood_cleansedCarthay",NA,-0.123427858023272
+"294","f_property_typeRoom_apt:f_neighbourhood_cleansedCentury City",NA,0.756124679192278
+"295","f_property_typeRoom_apt:f_neighbourhood_cleansedChinatown",NA,-0.125735171816396
+"296","f_property_typeRoom_apt:f_neighbourhood_cleansedCulver City",NA,-0.0131005111100161
+"297","f_property_typeRoom_apt:f_neighbourhood_cleansedDel Aire",NA,-0.285357121023522
+"298","f_property_typeRoom_apt:f_neighbourhood_cleansedDowntown",NA,-0.467509701068729
+"299","f_property_typeRoom_apt:f_neighbourhood_cleansedEagle Rock",NA,-0.0149629739433522
+"300","f_property_typeRoom_apt:f_neighbourhood_cleansedEast Los Angeles",NA,0.752968759575781
+"301","f_property_typeRoom_apt:f_neighbourhood_cleansedEast San Gabriel",NA,0.241562763807736
+"302","f_property_typeRoom_apt:f_neighbourhood_cleansedEcho Park",NA,-0.292404519469713
+"303","f_property_typeRoom_apt:f_neighbourhood_cleansedEl Segundo",NA,0.0453168420606889
+"304","f_property_typeRoom_apt:f_neighbourhood_cleansedEncino",NA,-0.0818155485305087
+"305","f_property_typeRoom_apt:f_neighbourhood_cleansedGlassell Park",NA,-0.104846734176687
+"306","f_property_typeRoom_apt:f_neighbourhood_cleansedGlendale",NA,-0.165464520557684
+"307","f_property_typeRoom_apt:f_neighbourhood_cleansedHarbor Gateway",NA,-0.0747048166219799
+"308","f_property_typeRoom_apt:f_neighbourhood_cleansedHermosa Beach",NA,-0.94489217193479
+"309","f_property_typeRoom_apt:f_neighbourhood_cleansedHollywood Hills",NA,-0.101635509112402
+"310","f_property_typeRoom_apt:f_neighbourhood_cleansedInglewood",NA,0.682207606338346
+"311","f_property_typeRoom_apt:f_neighbourhood_cleansedLarchmont",NA,0.487942904299306
+"312","f_property_typeRoom_apt:f_neighbourhood_cleansedLincoln Heights",NA,1.68621166069156
+"313","f_property_typeRoom_apt:f_neighbourhood_cleansedLos Feliz",NA,0.382660634879821
+"314","f_property_typeRoom_apt:f_neighbourhood_cleansedLynwood",NA,0.529368129843508
+"315","f_property_typeRoom_apt:f_neighbourhood_cleansedMalibu",NA,-0.682268799277999
+"316","f_property_typeRoom_apt:f_neighbourhood_cleansedManhattan Beach",NA,-0.86554464393576
+"317","f_property_typeRoom_apt:f_neighbourhood_cleansedMar Vista",NA,0.251932909954952
+"318","f_property_typeRoom_apt:f_neighbourhood_cleansedMarina del Rey",NA,-0.433217497931472
+"319","f_property_typeRoom_apt:f_neighbourhood_cleansedMonrovia",NA,-0.890981307485005
+"320","f_property_typeRoom_apt:f_neighbourhood_cleansedMonterey Park",NA,-0.53609267385478
+"321","f_property_typeRoom_apt:f_neighbourhood_cleansedMount Washington",NA,-0.0467443502395781
+"322","f_property_typeRoom_apt:f_neighbourhood_cleansedParamount",NA,-0.00172268687060537
+"323","f_property_typeRoom_apt:f_neighbourhood_cleansedPico-Robertson",NA,-0.114073430562253
+"324","f_property_typeRoom_apt:f_neighbourhood_cleansedPico-Union",NA,-0.142532831420423
+"325","f_property_typeRoom_apt:f_neighbourhood_cleansedPlaya del Rey",NA,-0.382294648887009
+"326","f_property_typeRoom_apt:f_neighbourhood_cleansedRancho Park",NA,-0.0617987223134597
+"327","f_property_typeRoom_apt:f_neighbourhood_cleansedRedondo Beach",NA,-0.540335516495904
+"328","f_property_typeRoom_apt:f_neighbourhood_cleansedRowland Heights",NA,-0.000337642220459274
+"329","f_property_typeRoom_apt:f_neighbourhood_cleansedSan Gabriel",NA,0.0372820712981848
+"330","f_property_typeRoom_apt:f_neighbourhood_cleansedSawtelle",NA,-0.324467199467401
+"331","f_property_typeRoom_apt:f_neighbourhood_cleansedSierra Madre",NA,0.0664567892318077
+"332","f_property_typeRoom_apt:f_neighbourhood_cleansedSouth Gate",NA,-0.814109139822358
+"333","f_property_typeRoom_apt:f_neighbourhood_cleansedSouth Pasadena",NA,0.0696647200749588
+"334","f_property_typeRoom_apt:f_neighbourhood_cleansedTopanga",NA,1.13255879436367
+"335","f_property_typeRoom_apt:f_neighbourhood_cleansedTorrance",NA,-0.377043880214409
+"336","f_property_typeRoom_apt:f_neighbourhood_cleansedUnincorporated Santa Monica Mountains",NA,-0.612864023837985
+"337","f_property_typeRoom_apt:f_neighbourhood_cleansedVenice",NA,-0.500177246747838
+"338","f_property_typeRoom_apt:f_neighbourhood_cleansedVermont Square",NA,-0.152772212933038
+"339","f_property_typeRoom_apt:f_neighbourhood_cleansedView Park-Windsor Hills",NA,0.0174414842628149
+"340","f_property_typeRoom_apt:f_neighbourhood_cleansedWest Adams",NA,-0.86477918103537
+"341","f_property_typeRoom_apt:f_neighbourhood_cleansedWest Covina",NA,0.0984853851419637
+"342","f_property_typeRoom_apt:f_neighbourhood_cleansedWest Los Angeles",NA,0.250852063926331
+"343","f_property_typeRoom_apt:f_neighbourhood_cleansedWestchester",NA,-0.41453806049105
+"344","f_property_typeRoom_apt:f_neighbourhood_cleansedWindsor Square",NA,0.205929231303722
+"345","f_property_typeRoom_apt:f_neighbourhood_cleansedWoodland Hills",NA,0.592589079919675
+"346","f_room_typeHotel room",33.7951670564158,NA
+"347","f_room_typeHotel room:f_neighbourhood_cleansedCentury City",NA,7.3968224292052e-08
+"348","f_room_typeHotel room:f_neighbourhood_cleansedWestwood",NA,-0.123784127568939
+"349","f_room_typePrivate room",22.6160222044217,NA
+"350","f_room_typePrivate room:d_instant_bookable",NA,0.362253528922521
+"351","f_room_typePrivate room:f_neighbourhood_cleansedArcadia",NA,-0.00243720169426666
+"352","f_room_typePrivate room:f_neighbourhood_cleansedBaldwin Park",NA,0.0020794902221214
+"353","f_room_typePrivate room:f_neighbourhood_cleansedBell",NA,-7.09313077068723e-07
+"354","f_room_typePrivate room:f_neighbourhood_cleansedBeverly Hills",NA,-0.00306093711140613
+"355","f_room_typePrivate room:f_neighbourhood_cleansedBrentwood",NA,-0.000626905359220897
+"356","f_room_typePrivate room:f_neighbourhood_cleansedCanoga Park",NA,-0.000258402905237554
+"357","f_room_typePrivate room:f_neighbourhood_cleansedCarthay",NA,-0.000104928682738139
+"358","f_room_typePrivate room:f_neighbourhood_cleansedChinatown",NA,-0.000954332341191416
+"359","f_room_typePrivate room:f_neighbourhood_cleansedCulver City",NA,-1.60832821550994e-05
+"360","f_room_typePrivate room:f_neighbourhood_cleansedDel Aire",NA,-0.000342551934309901
+"361","f_room_typePrivate room:f_neighbourhood_cleansedDel Rey",NA,-0.332228742273757
+"362","f_room_typePrivate room:f_neighbourhood_cleansedDowntown",NA,-0.00215035606707471
+"363","f_room_typePrivate room:f_neighbourhood_cleansedEagle Rock",NA,-1.34829235589891e-05
+"364","f_room_typePrivate room:f_neighbourhood_cleansedEast Los Angeles",NA,0.000442029349340546
+"365","f_room_typePrivate room:f_neighbourhood_cleansedEast San Gabriel",NA,6.75705593559548e-05
+"366","f_room_typePrivate room:f_neighbourhood_cleansedEcho Park",NA,-0.00342729428557776
+"367","f_room_typePrivate room:f_neighbourhood_cleansedEncino",NA,-0.000327189435642929
+"368","f_room_typePrivate room:f_neighbourhood_cleansedGlassell Park",NA,-0.000148287562139302
+"369","f_room_typePrivate room:f_neighbourhood_cleansedGlendale",NA,-0.000529398827084094
+"370","f_room_typePrivate room:f_neighbourhood_cleansedHarbor Gateway",NA,-5.07644597941496e-05
+"371","f_room_typePrivate room:f_neighbourhood_cleansedHawthorne",NA,0.0841144814017959
+"372","f_room_typePrivate room:f_neighbourhood_cleansedHermosa Beach",NA,-0.000179195231657819
+"373","f_room_typePrivate room:f_neighbourhood_cleansedHollywood",NA,0.473218837763755
+"374","f_room_typePrivate room:f_neighbourhood_cleansedHollywood Hills",NA,-0.000184145733939115
+"375","f_room_typePrivate room:f_neighbourhood_cleansedKoreatown",NA,0.212707350331065
+"376","f_room_typePrivate room:f_neighbourhood_cleansedLarchmont",NA,0.109741380833177
+"377","f_room_typePrivate room:f_neighbourhood_cleansedLincoln Heights",NA,7.37150049115547e-06
+"378","f_room_typePrivate room:f_neighbourhood_cleansedLong Beach",NA,1.19020365935477
+"379","f_room_typePrivate room:f_neighbourhood_cleansedMalibu",NA,-3.52292868456067e-05
+"380","f_room_typePrivate room:f_neighbourhood_cleansedManhattan Beach",NA,-0.00103108102725241
+"381","f_room_typePrivate room:f_neighbourhood_cleansedMar Vista",NA,0.000268078669976463
+"382","f_room_typePrivate room:f_neighbourhood_cleansedMarina del Rey",NA,-0.000517146512392324
+"383","f_room_typePrivate room:f_neighbourhood_cleansedMid-City",NA,0.682946111083288
+"384","f_room_typePrivate room:f_neighbourhood_cleansedMonrovia",NA,-1.07415826034204e-05
+"385","f_room_typePrivate room:f_neighbourhood_cleansedMonterey Park",NA,-0.000926993855447307
+"386","f_room_typePrivate room:f_neighbourhood_cleansedMount Washington",NA,-1.78318613307684e-05
+"387","f_room_typePrivate room:f_neighbourhood_cleansedPalms",NA,0.000396663879220546
+"388","f_room_typePrivate room:f_neighbourhood_cleansedParamount",NA,-3.70429307310357e-05
+"389","f_room_typePrivate room:f_neighbourhood_cleansedPasadena",NA,-0.255505051237202
+"390","f_room_typePrivate room:f_neighbourhood_cleansedPico-Robertson",NA,-0.000109987441824882
+"391","f_room_typePrivate room:f_neighbourhood_cleansedPlaya del Rey",NA,-0.00104177408728685
+"392","f_room_typePrivate room:f_neighbourhood_cleansedRancho Park",NA,-7.93723126880633e-06
+"393","f_room_typePrivate room:f_neighbourhood_cleansedRedondo Beach",NA,-0.000229901273530507
+"394","f_room_typePrivate room:f_neighbourhood_cleansedRowland Heights",NA,-3.34541097022904e-07
+"395","f_room_typePrivate room:f_neighbourhood_cleansedSan Gabriel",NA,4.25240034432995e-06
+"396","f_room_typePrivate room:f_neighbourhood_cleansedSanta Monica",NA,-0.593781710436065
+"397","f_room_typePrivate room:f_neighbourhood_cleansedSherman Oaks",NA,-0.353162503454791
+"398","f_room_typePrivate room:f_neighbourhood_cleansedSierra Madre",NA,3.81828960902366e-05
+"399","f_room_typePrivate room:f_neighbourhood_cleansedSouth Gate",NA,-3.41324999031468e-06
+"400","f_room_typePrivate room:f_neighbourhood_cleansedSouth Pasadena",NA,2.80011092600863e-05
+"401","f_room_typePrivate room:f_neighbourhood_cleansedStudio City",NA,-0.273410896052796
+"402","f_room_typePrivate room:f_neighbourhood_cleansedTopanga",NA,0.000634185477210544
+"403","f_room_typePrivate room:f_neighbourhood_cleansedTorrance",NA,-0.000623487735303397
+"404","f_room_typePrivate room:f_neighbourhood_cleansedUnincorporated Santa Monica Mountains",NA,-6.65299891184689e-05
+"405","f_room_typePrivate room:f_neighbourhood_cleansedVermont Square",NA,-0.000167774815660557
+"406","f_room_typePrivate room:f_neighbourhood_cleansedView Park-Windsor Hills",NA,5.16123197206785e-07
+"407","f_room_typePrivate room:f_neighbourhood_cleansedWest Adams",NA,-0.00011712702483649
+"408","f_room_typePrivate room:f_neighbourhood_cleansedWest Covina",NA,2.55513620466374e-06
+"409","f_room_typePrivate room:f_neighbourhood_cleansedWest Hollywood",NA,0.73501195472122
+"410","f_room_typePrivate room:f_neighbourhood_cleansedWest Los Angeles",NA,0.000737919254083552
+"411","f_room_typePrivate room:f_neighbourhood_cleansedWestchester",NA,-0.00584196701916802
+"412","f_room_typePrivate room:f_neighbourhood_cleansedWestwood",NA,0.328288986904019
+"413","f_room_typePrivate room:f_neighbourhood_cleansedWindsor Square",NA,1.53243701856395e-07
+"414","f_room_typeShared room",NA,-1.54949569534056
+"415","f_room_typeShared room:f_neighbourhood_cleansedDel Rey",NA,0.992099325113329
+"416","f_room_typeShared room:f_neighbourhood_cleansedGardena",NA,0.45992998323555
+"417","f_room_typeShared room:f_neighbourhood_cleansedHollywood",NA,-0.0257377194816258
+"418","f_room_typeShared room:f_neighbourhood_cleansedKoreatown",NA,-0.284644964697889
+"419","f_room_typeShared room:f_neighbourhood_cleansedMid-City",NA,-0.000629514800639194
+"420","f_room_typeShared room:f_neighbourhood_cleansedPalms",NA,-0.000106576885765717
+"421","f_room_typeShared room:f_neighbourhood_cleansedPico-Union",NA,-0.45283593112799
+"422","f_room_typeShared room:f_neighbourhood_cleansedSanta Monica",NA,0.0834435838446137
+"423","f_room_typeShared room:f_neighbourhood_cleansedSawtelle",NA,-0.886500517934578
+"424","f_room_typeShared room:f_neighbourhood_cleansedSherman Oaks",NA,0.190437369365905
+"425","f_room_typeShared room:f_neighbourhood_cleansedVenice",NA,-0.0863149097387321
+"426","f_room_typeShared room:f_neighbourhood_cleansedWestwood",NA,-0.417365367810185
+"427","f_room_typeShared room:f_neighbourhood_cleansedWoodland Hills",NA,0.433207824709347
+"428","flag_review_scores_rating",12.3567996693595,5.44560406840317
+"429","n_accommodates",13.4445552235327,14.4577472512295
+"430","n_accommodates:f_neighbourhood_cleansedAlondra Park",NA,0.034748597412397
+"431","n_accommodates:f_neighbourhood_cleansedAltadena",NA,0.000179183794231081
+"432","n_accommodates:f_neighbourhood_cleansedArcadia",NA,0.286211792754212
+"433","n_accommodates:f_neighbourhood_cleansedAtwater Village",NA,-0.0180970849727438
+"434","n_accommodates:f_neighbourhood_cleansedAvalon",NA,0.531838847633775
+"435","n_accommodates:f_neighbourhood_cleansedAzusa",NA,-0.181817875996918
+"436","n_accommodates:f_neighbourhood_cleansedBaldwin Hills/Crenshaw",NA,-0.221890355277221
+"437","n_accommodates:f_neighbourhood_cleansedBell",NA,-2.79105569157624e-07
+"438","n_accommodates:f_neighbourhood_cleansedBell Gardens",NA,0.0304851382086822
+"439","n_accommodates:f_neighbourhood_cleansedBeverly Crest",NA,0.0190218265616403
+"440","n_accommodates:f_neighbourhood_cleansedBeverly Grove",NA,3.58899472655863
+"441","n_accommodates:f_neighbourhood_cleansedBeverly Hills",NA,2.48421359502009
+"442","n_accommodates:f_neighbourhood_cleansedBeverlywood",NA,-0.520409910382708
+"443","n_accommodates:f_neighbourhood_cleansedBoyle Heights",NA,-0.46577710940683
+"444","n_accommodates:f_neighbourhood_cleansedBrentwood",NA,0.630952859653213
+"445","n_accommodates:f_neighbourhood_cleansedCalabasas",NA,-0.300486883178511
+"446","n_accommodates:f_neighbourhood_cleansedCanoga Park",NA,-0.316307266868737
+"447","n_accommodates:f_neighbourhood_cleansedCarthay",NA,-0.195545996424376
+"448","n_accommodates:f_neighbourhood_cleansedCheviot Hills",NA,0.000262141026442722
+"449","n_accommodates:f_neighbourhood_cleansedDel Rey",NA,1.50359227701485
+"450","n_accommodates:f_neighbourhood_cleansedDiamond Bar",NA,-0.152762881112933
+"451","n_accommodates:f_neighbourhood_cleansedDowney",NA,-0.211668716840498
+"452","n_accommodates:f_neighbourhood_cleansedDowntown",NA,4.95921663373902
+"453","n_accommodates:f_neighbourhood_cleansedEast Hollywood",NA,-1.50887144124312
+"454","n_accommodates:f_neighbourhood_cleansedEast Los Angeles",NA,-1.21940302835488
+"455","n_accommodates:f_neighbourhood_cleansedEast San Gabriel",NA,-0.263123524615106
+"456","n_accommodates:f_neighbourhood_cleansedEl Monte",NA,-0.830828187241122
+"457","n_accommodates:f_neighbourhood_cleansedElysian Park",NA,-0.298778904253485
+"458","n_accommodates:f_neighbourhood_cleansedEncino",NA,-0.0811819484302651
+"459","n_accommodates:f_neighbourhood_cleansedExposition Park",NA,-0.0433371784933183
+"460","n_accommodates:f_neighbourhood_cleansedFairfax",NA,1.56743820288012
+"461","n_accommodates:f_neighbourhood_cleansedFlorence",NA,-0.000993043633754336
+"462","n_accommodates:f_neighbourhood_cleansedGardena",NA,-0.51629507556831
+"463","n_accommodates:f_neighbourhood_cleansedGlendale",NA,1.59849525820147
+"464","n_accommodates:f_neighbourhood_cleansedHarbor City",NA,0.110775078828437
+"465","n_accommodates:f_neighbourhood_cleansedHarbor Gateway",NA,1.50447002674632
+"466","n_accommodates:f_neighbourhood_cleansedHarvard Heights",NA,-0.424009167356023
+"467","n_accommodates:f_neighbourhood_cleansedHarvard Park",NA,-8.53954863051558e-05
+"468","n_accommodates:f_neighbourhood_cleansedHighland Park",NA,-1.37874969685717
+"469","n_accommodates:f_neighbourhood_cleansedHistoric South-Central",NA,-0.40560243445665
+"470","n_accommodates:f_neighbourhood_cleansedHuntington Park",NA,0.00266451786102422
+"471","n_accommodates:f_neighbourhood_cleansedHyde Park",NA,-0.0387018425289059
+"472","n_accommodates:f_neighbourhood_cleansedIndustry",NA,-2.35099819816513
+"473","n_accommodates:f_neighbourhood_cleansedLa Puente",NA,-0.00042056788133332
+"474","n_accommodates:f_neighbourhood_cleansedLadera Heights",NA,2.65813611330087e-06
+"475","n_accommodates:f_neighbourhood_cleansedLancaster",NA,-0.0300225538002605
+"476","n_accommodates:f_neighbourhood_cleansedLarchmont",NA,-0.415048246844642
+"477","n_accommodates:f_neighbourhood_cleansedLawndale",NA,-0.16473894670752
+"478","n_accommodates:f_neighbourhood_cleansedLeimert Park",NA,-0.0578370833341157
+"479","n_accommodates:f_neighbourhood_cleansedLincoln Heights",NA,-0.00123749643925402
+"480","n_accommodates:f_neighbourhood_cleansedLomita",NA,-0.266037298858266
+"481","n_accommodates:f_neighbourhood_cleansedLong Beach",NA,-1.38332249261633
+"482","n_accommodates:f_neighbourhood_cleansedLos Feliz",NA,-1.21602105665494
+"483","n_accommodates:f_neighbourhood_cleansedLynwood",NA,-0.748079716350024
+"484","n_accommodates:f_neighbourhood_cleansedMalibu",NA,-0.518730185011871
+"485","n_accommodates:f_neighbourhood_cleansedManhattan Beach",NA,2.12593336996865
+"486","n_accommodates:f_neighbourhood_cleansedMar Vista",NA,-1.38546888371244
+"487","n_accommodates:f_neighbourhood_cleansedMaywood",NA,-3.80169389541617e-05
+"488","n_accommodates:f_neighbourhood_cleansedMid-City",NA,-0.213131146072016
+"489","n_accommodates:f_neighbourhood_cleansedMid-Wilshire",NA,0.568547582642234
+"490","n_accommodates:f_neighbourhood_cleansedMontecito Heights",NA,-0.000430933672949699
+"491","n_accommodates:f_neighbourhood_cleansedMonterey Park",NA,0.959092184427131
+"492","n_accommodates:f_neighbourhood_cleansedMount Washington",NA,0.284174429573339
+"493","n_accommodates:f_neighbourhood_cleansedNorth Hollywood",NA,-0.516303443178502
+"494","n_accommodates:f_neighbourhood_cleansedNorthridge",NA,-0.510530032484254
+"495","n_accommodates:f_neighbourhood_cleansedNorwalk",NA,-0.350224395616723
+"496","n_accommodates:f_neighbourhood_cleansedPacific Palisades",NA,0.693977034046292
+"497","n_accommodates:f_neighbourhood_cleansedPalmdale",NA,-0.106610112187662
+"498","n_accommodates:f_neighbourhood_cleansedPalms",NA,-0.903368560885894
+"499","n_accommodates:f_neighbourhood_cleansedPanorama City",NA,-0.00619576166427078
+"500","n_accommodates:f_neighbourhood_cleansedParamount",NA,-0.00920858182102947
+"501","n_accommodates:f_neighbourhood_cleansedPasadena",NA,0.818551718728062
+"502","n_accommodates:f_neighbourhood_cleansedPico-Robertson",NA,0.915474574116982
+"503","n_accommodates:f_neighbourhood_cleansedPico-Union",NA,0.290800736683915
+"504","n_accommodates:f_neighbourhood_cleansedPlaya del Rey",NA,1.98786405294306
+"505","n_accommodates:f_neighbourhood_cleansedPomona",NA,0.948038255646736
+"506","n_accommodates:f_neighbourhood_cleansedQuartz Hill",NA,-0.00116673476892562
+"507","n_accommodates:f_neighbourhood_cleansedRancho Palos Verdes",NA,2.2255280609285
+"508","n_accommodates:f_neighbourhood_cleansedRancho Park",NA,0.793585796601692
+"509","n_accommodates:f_neighbourhood_cleansedRedondo Beach",NA,0.150295551744542
+"510","n_accommodates:f_neighbourhood_cleansedRowland Heights",NA,-2.45428466066195
+"511","n_accommodates:f_neighbourhood_cleansedSan Fernando",NA,-0.0305006586700066
+"512","n_accommodates:f_neighbourhood_cleansedSan Gabriel",NA,-0.178201890120543
+"513","n_accommodates:f_neighbourhood_cleansedSanta Monica",NA,7.62267877550104
+"514","n_accommodates:f_neighbourhood_cleansedSawtelle",NA,0.791522123947191
+"515","n_accommodates:f_neighbourhood_cleansedSherman Oaks",NA,-0.0306719570150914
+"516","n_accommodates:f_neighbourhood_cleansedSilver Lake",NA,0.335490577764506
+"517","n_accommodates:f_neighbourhood_cleansedSouth Park",NA,-0.0329351827673898
+"518","n_accommodates:f_neighbourhood_cleansedSouth Pasadena",NA,-0.124758312332913
+"519","n_accommodates:f_neighbourhood_cleansedStudio City",NA,0.169627362234832
+"520","n_accommodates:f_neighbourhood_cleansedSun Valley",NA,-0.843192626868777
+"521","n_accommodates:f_neighbourhood_cleansedSunland",NA,-0.000427518001349225
+"522","n_accommodates:f_neighbourhood_cleansedTarzana",NA,-0.265304549234656
+"523","n_accommodates:f_neighbourhood_cleansedTemple City",NA,1.12653226400801
+"524","n_accommodates:f_neighbourhood_cleansedToluca Lake",NA,-0.206897238941562
+"525","n_accommodates:f_neighbourhood_cleansedTopanga",NA,3.06549164568691
+"526","n_accommodates:f_neighbourhood_cleansedTorrance",NA,1.95565515078272
+"527","n_accommodates:f_neighbourhood_cleansedUnincorporated Santa Monica Mountains",NA,0.822763510930813
+"528","n_accommodates:f_neighbourhood_cleansedUnincorporated Santa Susana Mountains",NA,-0.000619050191443137
+"529","n_accommodates:f_neighbourhood_cleansedUniversal City",NA,-0.406271204273114
+"530","n_accommodates:f_neighbourhood_cleansedUniversity Park",NA,-0.175316755959636
+"531","n_accommodates:f_neighbourhood_cleansedValley Glen",NA,-0.86247732728223
+"532","n_accommodates:f_neighbourhood_cleansedValley Village",NA,0.000363541477708185
+"533","n_accommodates:f_neighbourhood_cleansedVan Nuys",NA,-0.222060682175529
+"534","n_accommodates:f_neighbourhood_cleansedVenice",NA,3.30518833176666
+"535","n_accommodates:f_neighbourhood_cleansedVermont Knolls",NA,-0.311301110073546
+"536","n_accommodates:f_neighbourhood_cleansedVernon",NA,1.00824798325977
+"537","n_accommodates:f_neighbourhood_cleansedVeterans Administration",NA,-0.0750287458896106
+"538","n_accommodates:f_neighbourhood_cleansedVincent",NA,-0.00236377915931933
+"539","n_accommodates:f_neighbourhood_cleansedWest Adams",NA,1.33834761599144
+"540","n_accommodates:f_neighbourhood_cleansedWest Covina",NA,-0.0659074904810515
+"541","n_accommodates:f_neighbourhood_cleansedWest Hollywood",NA,2.88059888425575
+"542","n_accommodates:f_neighbourhood_cleansedWest Los Angeles",NA,-0.0693207844082897
+"543","n_accommodates:f_neighbourhood_cleansedWestchester",NA,-1.05276294767149
+"544","n_accommodates:f_neighbourhood_cleansedWestmont",NA,-0.0400806667650306
+"545","n_accommodates:f_neighbourhood_cleansedWestwood",NA,1.33493795001831
+"546","n_accommodates:f_neighbourhood_cleansedWoodland Hills",NA,-0.783335368643651
+"547","n_accommodates:f_property_typeRoom_apt",NA,-2.36443457002926
+"548","n_beds",3.09277396554525,3.09510434462293
+"549","n_days_since",0.00493357989712916,2.52399461452512
+"550","n_number_of_reviews",-0.0647609674908081,-2.50659615515144
+"551","n_review_scores_rating",0.139350179222083,1.27788060117653

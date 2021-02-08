@@ -7,7 +7,8 @@ rm(list=ls())
 library(tidyverse)
 
 ## Import data
-data_in <- "~/Documents/Egyetem/CEU/Teaching_2020/Coding_with_R/git_coding_1/ECBS-5208-Coding-1-Business-Analytics/Class_2/data/"
+data_in <- "/Users/wodediannao/Desktop/ECBS-5208-Coding-1-Business-Analytics/Class_2/data/"
+
 hotels_vienna <- read_csv(paste0(data_in,"clean/hotels_vienna.csv"))
 
 
@@ -32,7 +33,8 @@ length(hotels_vienna$price)
 
 ###
 # Visualization
-ggplot( data = hotels_vienna , aes( x = price ) ) + geom_histogram()
+ggplot( data = hotels_vienna , aes( x = price ) ) + 
+  geom_histogram()
 
 
 ggplot( data = hotels_vienna , aes( x = price ) ) +
@@ -46,7 +48,7 @@ ggplot( data = hotels_vienna , aes( x = price) ) +
 
 # Relative frequency graph
 ggplot( data = hotels_vienna , aes( x = price) ) +
-  geom_histogram( aes( y = ..density..) , fill = "navyblue" , binwidth = 20 ) +
+  geom_histogram( aes( y = ..density..) , fill = "navyblue" , binwidth = 20 ) + # 直接把数值改了，省得再加一列！
   labs(x="Hotel prices ($)",y="Relative Frequency")
 
 # Kernel density estimator
